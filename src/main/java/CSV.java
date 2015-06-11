@@ -23,36 +23,40 @@ public class CSV {
 
     public CSV(File file) {
         try {
-            CSVReader reader = new CSVReader(new FileReader(file));
-            CSVReader reader2 = new CSVReader(new FileReader(new File(file.toString()+".ini")));
+            CSVReader csvReader = new CSVReader(new FileReader(file));
+            CSVReader iniReader = new CSVReader(new FileReader(new File(file.toString()+".ini")));
 
-            String [] nextLine2;
-            reader2.readNext();
-            while ((nextLine2 = reader2.readNext()) != null) {
-                if(nextLine2[0].contains("movementStartTimestamp")) {
-                    tStart = Long.parseLong(nextLine2[0].split("=")[1]);
+
+            // Reading INI File for config
+            String [] iniNextLine;
+            iniReader.readNext();
+            while ((iniNextLine = iniReader.readNext()) != null) {
+                if(iniNextLine[0].contains("movementStartTimestamp")) {
+                    tStart = Long.parseLong(iniNextLine[0].split("=")[1]);
                 }
-                if(nextLine2[0].contains("movementEndTimestamp")) {
-                    tEnd = Long.parseLong(nextLine2[0].split("=")[1]);
+                if(iniNextLine[0].contains("movementEndTimestamp")) {
+                    tEnd = Long.parseLong(iniNextLine[0].split("=")[1]);
                 }
             }
-            String [] nextLine;
-            reader.readNext();
-            while ((nextLine = reader.readNext()) != null) {
-                String id = nextLine[0];
+
+            // Reading CSV File
+            String [] csvNextLine;
+            csvReader.readNext();
+            while ((csvNextLine = csvReader.readNext()) != null) {
+                String id = csvNextLine[0];
                 if(!sensors.containsKey(id)) {
                     sensors.put(id, new Sensor(id));
                 }
 
                 Sensor sensor = sensors.get(id);
-                long timestamp = Long.parseLong(nextLine[1]);
+                long timestamp = Long.parseLong(csvNextLine[1]);
                 if(timestamp < tStart || timestamp > tEnd
                         && tStart != 0 && tEnd != 0) {
                     continue;
                 }
-                double accX = Double.parseDouble(nextLine[2]);
-                double accY = Double.parseDouble(nextLine[3]);
-                double accZ = Double.parseDouble(nextLine[4]);
+                double accX = Double.parseDouble(csvNextLine[2]);
+                double accY = Double.parseDouble(csvNextLine[3]);
+                double accZ = Double.parseDouble(csvNextLine[4]);
 
                 sensor.getAccelX().put(timestamp, accX);
                 sensor.getAccelY().put(timestamp, accY);
