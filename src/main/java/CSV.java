@@ -1,15 +1,12 @@
 import com.opencsv.CSVReader;
-import com.sun.org.apache.xpath.internal.SourceTree;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,10 +29,15 @@ public class CSV {
             iniReader.readNext();
             while ((iniNextLine = iniReader.readNext()) != null) {
                 if(iniNextLine[0].contains("movementStartTimestamp")) {
-                    tStart = Long.parseLong(iniNextLine[0].split("=")[1]);
+                    if(iniNextLine[0].split("=").length > 1) {
+                        tStart = Long.parseLong(iniNextLine[0].split("=")[1]);
+                    }
+
                 }
                 if(iniNextLine[0].contains("movementEndTimestamp")) {
-                    tEnd = Long.parseLong(iniNextLine[0].split("=")[1]);
+                    if(iniNextLine[0].split("=").length > 1) {
+                        tEnd = Long.parseLong(iniNextLine[0].split("=")[1]);
+                    }
                 }
             }
 
@@ -101,67 +103,86 @@ public class CSV {
         for(Sensor sensor: sensors.values()) {
             JSONArray values = new JSONArray();
 
-            JSONObject avgAccX = new JSONObject().put("averageAccX",StatisticHelper.average(sensor.getAccelX().values()));
-            JSONObject avgAccY = new JSONObject().put("averageAccY",StatisticHelper.average(sensor.getAccelY().values()));
-            JSONObject avgAccZ = new JSONObject().put("averageAccZ",StatisticHelper.average(sensor.getAccelZ().values()));
+            JSONObject avgAccX = new JSONObject();
+            avgAccX.put("averageAccX",StatisticHelper.average(sensor.getAccelX().values()));
+            JSONObject avgAccY = new JSONObject();
+            avgAccY.put("averageAccY",StatisticHelper.average(sensor.getAccelY().values()));
+            JSONObject avgAccZ = new JSONObject();
+            avgAccZ.put("averageAccZ",StatisticHelper.average(sensor.getAccelZ().values()));
 
-            values.put(avgAccX);
-            values.put(avgAccY);
-            values.put(avgAccZ);
+            values.add(avgAccX);
+            values.add(avgAccY);
+            values.add(avgAccZ);
 
             System.out.println("Average calculated for Sensor" + sensor.getId());
 
-            JSONObject stdAccX = new JSONObject().put("stdAccX",StatisticHelper.standardDeviation(sensor.getAccelX().values()));
-            JSONObject stdAccY = new JSONObject().put("stdAccY",StatisticHelper.standardDeviation(sensor.getAccelY().values()));
-            JSONObject stdAccZ = new JSONObject().put("stdAccZ",StatisticHelper.standardDeviation(sensor.getAccelZ().values()));
+            JSONObject stdAccX = new JSONObject();
+            stdAccX.put("stdAccX", StatisticHelper.standardDeviation(sensor.getAccelX().values()));
+            JSONObject stdAccY = new JSONObject();
+            stdAccY.put("stdAccY", StatisticHelper.standardDeviation(sensor.getAccelY().values()));
+            JSONObject stdAccZ = new JSONObject();
+            stdAccZ.put("stdAccZ", StatisticHelper.standardDeviation(sensor.getAccelZ().values()));
 
-            values.put(stdAccX);
-            values.put(stdAccY);
-            values.put(stdAccZ);
+            values.add(stdAccX);
+            values.add(stdAccY);
+            values.add(stdAccZ);
 
             System.out.println("Standard Deviation calculated for Sensor" + sensor.getId());
 
-            JSONObject medianAccX = new JSONObject().put("medianAccX",StatisticHelper.median(sensor.getAccelX().values()));
-            JSONObject medianAccY = new JSONObject().put("medianAccY",StatisticHelper.median(sensor.getAccelY().values()));
-            JSONObject medianAccZ = new JSONObject().put("medianAccZ",StatisticHelper.median(sensor.getAccelZ().values()));
+            JSONObject medianAccX = new JSONObject();
+            medianAccX.put("medianAccX", StatisticHelper.median(sensor.getAccelX().values()));
+            JSONObject medianAccY = new JSONObject();
+            medianAccY.put("medianAccY", StatisticHelper.median(sensor.getAccelY().values()));
+            JSONObject medianAccZ = new JSONObject();
+            medianAccZ.put("medianAccZ", StatisticHelper.median(sensor.getAccelZ().values()));
 
-            values.put(medianAccX);
-            values.put(medianAccY);
-            values.put(medianAccZ);
+            values.add(medianAccX);
+            values.add(medianAccY);
+            values.add(medianAccZ);
 
             System.out.println("Median calculated for Sensor" + sensor.getId());
 
-            JSONObject rangeAccX = new JSONObject().put("rangeAccX",StatisticHelper.range(sensor.getAccelX().values()));
-            JSONObject rangeAccY = new JSONObject().put("rangeAccY",StatisticHelper.range(sensor.getAccelY().values()));
-            JSONObject rangeAccZ = new JSONObject().put("rangeAccZ",StatisticHelper.range(sensor.getAccelZ().values()));
+            JSONObject rangeAccX = new JSONObject();
+            rangeAccX.put("rangeAccX", StatisticHelper.range(sensor.getAccelX().values()));
+            JSONObject rangeAccY = new JSONObject();
+            rangeAccY.put("rangeAccY", StatisticHelper.range(sensor.getAccelY().values()));
+            JSONObject rangeAccZ = new JSONObject();
+            rangeAccZ.put("rangeAccZ", StatisticHelper.range(sensor.getAccelZ().values()));
 
-            values.put(rangeAccX);
-            values.put(rangeAccY);
-            values.put(rangeAccZ);
+            values.add(rangeAccX);
+            values.add(rangeAccY);
+            values.add(rangeAccZ);
 
             System.out.println("Range calculated for Sensor" + sensor.getId());
 
-            JSONObject maxAccX = new JSONObject().put("maxAccX",StatisticHelper.maxValue(sensor.getAccelX().values()));
-            JSONObject maxAccY = new JSONObject().put("maxAccY",StatisticHelper.maxValue(sensor.getAccelY().values()));
-            JSONObject maxAccZ = new JSONObject().put("maxAccZ",StatisticHelper.maxValue(sensor.getAccelZ().values()));
+            JSONObject maxAccX = new JSONObject();
+            maxAccX.put("maxAccX", StatisticHelper.maxValue(sensor.getAccelX().values()));
+            JSONObject maxAccY = new JSONObject();
+            maxAccY.put("maxAccY", StatisticHelper.maxValue(sensor.getAccelY().values()));
+            JSONObject maxAccZ = new JSONObject();
+            maxAccZ.put("maxAccZ", StatisticHelper.maxValue(sensor.getAccelZ().values()));
 
-            values.put(maxAccX);
-            values.put(maxAccY);
-            values.put(maxAccZ);
-
-            System.out.println("MaxValue calculated for Sensor" + sensor.getId());
-
-            JSONObject minAccX = new JSONObject().put("minAccX",StatisticHelper.minValue(sensor.getAccelX().values()));
-            JSONObject minAccY = new JSONObject().put("minAccY",StatisticHelper.minValue(sensor.getAccelY().values()));
-            JSONObject minAccZ = new JSONObject().put("minAccZ",StatisticHelper.minValue(sensor.getAccelZ().values()));
-
-            values.put(minAccX);
-            values.put(minAccY);
-            values.put(minAccZ);
+            values.add(maxAccX);
+            values.add(maxAccY);
+            values.add(maxAccZ);
 
             System.out.println("MaxValue calculated for Sensor" + sensor.getId());
 
-            JSONObject sensorValue = new JSONObject().put(sensor.getId(), values);
+            JSONObject minAccX = new JSONObject();
+            minAccX.put("minAccX", StatisticHelper.minValue(sensor.getAccelX().values()));
+            JSONObject minAccY = new JSONObject();
+            minAccY.put("minAccY", StatisticHelper.minValue(sensor.getAccelY().values()));
+            JSONObject minAccZ = new JSONObject();
+            minAccZ.put("minAccZ", StatisticHelper.minValue(sensor.getAccelZ().values()));
+
+            values.add(minAccX);
+            values.add(minAccY);
+            values.add(minAccZ);
+
+            System.out.println("MaxValue calculated for Sensor" + sensor.getId());
+
+            JSONObject sensorValue = new JSONObject();
+            sensorValue.put(sensor.getId(), values);
             jsonObject.put("sensor" + i++, sensorValue);
 
         }
@@ -171,9 +192,9 @@ public class CSV {
         String newPath = file.toString().replace(".csv", ".json");
         try {
             fw = new FileWriter(newPath);
-            fw.write(jsonObject.toString(4));
+            fw.write(jsonObject.toString());
             System.out.println("Successfully Copied JSON Object to File...");
-            System.out.println("\nJSON Object: " + jsonObject.toString(4));
+            System.out.println("\nJSON Object: " + jsonObject.toString());
 
             fw.flush();
             fw.close();

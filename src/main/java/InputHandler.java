@@ -24,10 +24,9 @@ public class InputHandler {
             Characteristic c = new Characteristic(jsonObject);
             for(String key: c.characteristics.keySet()) {
                 HashMap<String, Double>  data = c.characteristics.get(key);
+                System.out.println("Sensor: " + key);
                 for(String datakey : data.keySet()) {
-                    System.out.println("Sensor:" + key);
-                    System.out.println("Datakey" + datakey);
-                    System.out.println("Value" + data.get(datakey));
+                    System.out.println("Datakey: " + datakey + "Value: " + data.get(datakey));
                 }
             }
         } catch (IOException e) {
