@@ -1,9 +1,6 @@
 package csvparser;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Robin on 18.05.2015.
@@ -12,13 +9,13 @@ public class Sensor {
 
     private String id;
     private int size;
-    private Map<Long, Double> accelX = new HashMap<Long, Double>();
-    private Map<Long, Double> accelY = new HashMap<Long, Double>();
-    private Map<Long, Double> accelZ = new HashMap<Long, Double>();;
+    private Map<Long, Double> accelX = new LinkedHashMap<Long, Double>();
+    private Map<Long, Double> accelY = new LinkedHashMap<Long, Double>();
+    private Map<Long, Double> accelZ = new LinkedHashMap<Long, Double>();;
 
-    private Map<Long, Double> gyroX = new HashMap<Long, Double>();
-    private Map<Long, Double> gyroY = new HashMap<Long, Double>();
-    private Map<Long, Double> gyroZ = new HashMap<Long, Double>();;
+    private Map<Long, Double> gyroX = new LinkedHashMap<Long, Double>();
+    private Map<Long, Double> gyroY = new LinkedHashMap<Long, Double>();
+    private Map<Long, Double> gyroZ = new LinkedHashMap<Long, Double>();;
 
 
     public Sensor(String id) {

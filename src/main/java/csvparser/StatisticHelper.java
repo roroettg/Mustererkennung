@@ -1,9 +1,6 @@
 package csvparser;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by robin on 01.06.15.
@@ -23,6 +20,24 @@ public class StatisticHelper {
         return min;
     }
 
+    public static List<Double> minValueWithDelta(Map<Long, Double> data, int delta) {
+        List<Double> processedData = new ArrayList<Double>();
+        List<Double> subData = new ArrayList<Double>();
+        Long start = (Long) data.keySet().toArray()[0];
+        for(Long timestamp : data.keySet()) {
+            if(timestamp-start > delta) {
+                processedData.add(minValue(subData));
+                subData.clear();
+                start = timestamp;
+            } else {
+                subData.add(data.get(timestamp));
+            }
+        }
+
+
+        return processedData;
+    }
+
 
     /**
      * Berechnet das Maximum der Zahlenfolge
@@ -30,11 +45,29 @@ public class StatisticHelper {
      */
     public static double maxValue(Collection<Double> data)
     {
-        double max = Double.MIN_VALUE;
+        double max = -Double.MAX_VALUE;
         for(Double d : data) {
             if (d > max) max = d;
         }
         return max;
+    }
+
+    public static List<Double> maxValueWithDelta(Map<Long, Double> data, int delta) {
+        List<Double> processedData = new ArrayList<Double>();
+        List<Double> subData = new ArrayList<Double>();
+        Long start = (Long) data.keySet().toArray()[0];
+        for(Long timestamp : data.keySet()) {
+            if(timestamp-start > delta) {
+                processedData.add(maxValue(subData));
+                subData.clear();
+                start = timestamp;
+            } else {
+                subData.add(data.get(timestamp));
+            }
+        }
+
+
+        return processedData;
     }
 
     public static double average(Collection<Double> data) {
@@ -45,6 +78,24 @@ public class StatisticHelper {
         return result/data.size();
     }
 
+    public static List<Double> averageWithDelta(Map<Long, Double> data, int delta) {
+        List<Double> processedData = new ArrayList<Double>();
+        List<Double> subData = new ArrayList<Double>();
+        Long start = (Long) data.keySet().toArray()[0];
+        for(Long timestamp : data.keySet()) {
+            if(timestamp-start > delta) {
+                processedData.add(average(subData));
+                subData.clear();
+                start = timestamp;
+            } else {
+                subData.add(data.get(timestamp));
+            }
+        }
+
+
+        return processedData;
+    }
+
     public static double standardDeviation(Collection<Double> data) {
         double sdev = 0.0;
         double mean = average(data);
@@ -53,6 +104,24 @@ public class StatisticHelper {
             sdev = Math.sqrt(sdev / (data.size() - 1.0));
         }
         return sdev;
+    }
+
+    public static List<Double> standardDeviationWithDelta(Map<Long, Double> data, int delta) {
+        List<Double> processedData = new ArrayList<Double>();
+        List<Double> subData = new ArrayList<Double>();
+        Long start = (Long) data.keySet().toArray()[0];
+        for(Long timestamp : data.keySet()) {
+            if(timestamp-start > delta) {
+                processedData.add(standardDeviation(subData));
+                subData.clear();
+                start = timestamp;
+            } else {
+                subData.add(data.get(timestamp));
+            }
+        }
+
+
+        return processedData;
     }
 
     public static double median(Collection<Double> data) {
@@ -72,6 +141,23 @@ public class StatisticHelper {
 
         return median;
     }
+    public static List<Double> medianWithDelta(Map<Long, Double> data, int delta) {
+        List<Double> processedData = new ArrayList<Double>();
+        List<Double> subData = new ArrayList<Double>();
+        Long start = (Long) data.keySet().toArray()[0];
+        for(Long timestamp : data.keySet()) {
+            if(timestamp-start > delta) {
+                processedData.add(median(subData));
+                subData.clear();
+                start = timestamp;
+            } else {
+                subData.add(data.get(timestamp));
+            }
+        }
+
+
+        return processedData;
+    }
 
     public static void peakDetection(Collection<Double> data, double threshhold) {
         // peaks bestimmen über grenzwert
@@ -79,5 +165,23 @@ public class StatisticHelper {
 
     public static double range(Collection<Double> data) {
         return maxValue(data) - minValue(data);
+    }
+
+    public static List<Double> rangeWithDelta(Map<Long, Double> data, int delta) {
+        List<Double> processedData = new ArrayList<Double>();
+        List<Double> subData = new ArrayList<Double>();
+        Long start = (Long) data.keySet().toArray()[0];
+        for(Long timestamp : data.keySet()) {
+            if(timestamp-start > delta) {
+                processedData.add(range(subData));
+                subData.clear();
+                start = timestamp;
+            } else {
+                subData.add(data.get(timestamp));
+            }
+        }
+
+
+        return processedData;
     }
 }
