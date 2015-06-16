@@ -8,6 +8,7 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Created by robin on 15.06.15.
@@ -22,10 +23,14 @@ public class InputHandler {
 
             Characteristic c = new Characteristic(jsonObject);
             for(String key: c.characteristics.keySet()) {
-                HashMap<String, Double>  data = c.characteristics.get(key);
+                LinkedHashMap<String, Double[]> data = c.characteristics.get(key);
                 System.out.println("Sensor: " + key);
                 for(String datakey : data.keySet()) {
-                    System.out.println("Datakey: " + datakey + "Value: " + data.get(datakey));
+                    System.out.println("Datakey: " + datakey + "ValueCount: " + data.get(datakey).length);
+                    Double[] values = data.get(datakey);
+                    for(Double d: values) {
+                        System.out.println("Value: " + d);
+                    }
                 }
             }
         } catch (IOException e) {

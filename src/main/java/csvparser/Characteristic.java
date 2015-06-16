@@ -3,7 +3,7 @@ package csvparser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Created by robin on 15.06.15.
@@ -11,8 +11,8 @@ import java.util.HashMap;
 public class Characteristic {
 
     public static final int MAX_SENORS = 3;
-
-    public HashMap<String, HashMap<String, Double>> characteristics = new HashMap<String, HashMap<String, Double>>();
+    // Map<id, Map<valueTag, value>
+    public Map<String, LinkedHashMap<String, Double[]>> characteristics = new LinkedHashMap<String, LinkedHashMap<String, Double[]>>();
 
     public Characteristic(JSONObject jsonObject) {
         String[] ids = new String[MAX_SENORS];
@@ -21,19 +21,22 @@ public class Characteristic {
             String id = (String) ((JSONObject)jsonObject.get("sensor" + i)).keySet().toArray()[0];
 
             JSONArray array = (JSONArray) dataObj.get(id);
+            
+            LinkedHashMap<String, Double[]> valueMap = new LinkedHashMap<>();
 
-            HashMap<String, Double> values = new HashMap<String, Double>();
             for (int j = 0; j < array.size(); j++) {
-                String valueTag = (String)((JSONObject) array.get(j)).keySet().toArray()[0];
-                System.out.println(valueTag);
-                Double value = (Double)((JSONObject) array.get(j)).values().toArray()[0];
-                System.out.println(value);
-                values.put(valueTag,value);
+                String valueTag = (String) ((JSONObject) array.get(j)).keySet().toArray()[0];
+                JSONArray valueArray = (JSONArray)((JSONObject) array.get(j)).values().toArray()[0];
+                Double[] values = new Double[valueArray.size()];
+                for(int k = 0; k < valueArray.size(); k++) {
+                    values[k] = (Double)valueArray.get(k);
+                }
+                valueMap.put(valueTag, values);
             }
-            characteristics.put(id, values);
-
+            characteristics.put(id, valueMap);
         }
 
-
     }
+
+
 }
