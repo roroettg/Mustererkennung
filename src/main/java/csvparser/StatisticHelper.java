@@ -33,6 +33,9 @@ public class StatisticHelper {
                 subData.add(data.get(timestamp));
             }
         }
+        if(processedData.size() == 0) {
+            processedData.add(minValue(subData));
+        }
 
 
         return processedData;
@@ -65,6 +68,9 @@ public class StatisticHelper {
                 subData.add(data.get(timestamp));
             }
         }
+        if(processedData.size() == 0) {
+            processedData.add(maxValue(subData));
+        }
 
 
         return processedData;
@@ -90,6 +96,9 @@ public class StatisticHelper {
             } else {
                 subData.add(data.get(timestamp));
             }
+        }
+        if(processedData.size() == 0) {
+            processedData.add(average(subData));
         }
 
 
@@ -118,6 +127,9 @@ public class StatisticHelper {
             } else {
                 subData.add(data.get(timestamp));
             }
+        }
+        if(processedData.size() == 0) {
+            processedData.add(standardDeviation(subData));
         }
 
 
@@ -154,6 +166,9 @@ public class StatisticHelper {
                 subData.add(data.get(timestamp));
             }
         }
+        if(processedData.size() == 0) {
+            processedData.add(median(subData));
+        }
 
 
         return processedData;
@@ -179,6 +194,9 @@ public class StatisticHelper {
             } else {
                 subData.add(data.get(timestamp));
             }
+        }
+        if(processedData.size() == 0) {
+            processedData.add(range(subData));
         }
 
 

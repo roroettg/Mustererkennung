@@ -19,7 +19,7 @@ public class InputHandler {
         JSONParser parser = new JSONParser();
 
         try {
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("LernDaten/02/gehen.json"));
+            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("LernDaten/15/sitzen.json"));
 
             Characteristic c = new Characteristic(jsonObject);
             for(String key: c.characteristics.keySet()) {

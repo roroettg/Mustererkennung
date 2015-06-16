@@ -21,7 +21,7 @@ public class Characteristic {
             String id = (String) ((JSONObject)jsonObject.get("sensor" + i)).keySet().toArray()[0];
 
             JSONArray array = (JSONArray) dataObj.get(id);
-            
+
             LinkedHashMap<String, Double[]> valueMap = new LinkedHashMap<>();
 
             for (int j = 0; j < array.size(); j++) {
