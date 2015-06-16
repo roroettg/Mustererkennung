@@ -1,8 +1,9 @@
 
+import mustererkennung.algorithmen.InputHelper;
+import mustererkennung.algorithmen.Merkmal;
+import mustererkennung.algorithmen.PLA;
+
 import org.junit.Test;
-import pla.InputHelper;
-import pla.Merkmal;
-import pla.PLA;
 
 import java.util.ArrayList;
 

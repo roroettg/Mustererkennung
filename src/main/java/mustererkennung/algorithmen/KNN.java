@@ -1,4 +1,4 @@
-package pla;
+package mustererkennung.algorithmen;
 
 import adaptivesysteme.KMeans.Norm;
 

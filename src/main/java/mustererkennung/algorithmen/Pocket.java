@@ -1,6 +1,6 @@
-package pla;
+package mustererkennung.algorithmen;
 
-import adaptivesysteme.NeuronNetz.Neuron;
+import adaptivesysteme.NeuronNetz.NeuronenSchicht;
 import adaptivesysteme.NeuronNetz.TransferExp;
 import adaptivesysteme.NeuronNetz.Transferfunktion;
 
@@ -8,18 +8,19 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class PLA.
- */
-public class PLA {
+public class Pocket {
 
 	/** The n. */
-	private Neuron n;
+	private NeuronenSchicht n;
 
 	/** The f. */
 	private Transferfunktion f;
 
+	private double[][] bestWeights;
+
+	private double bestError = -1;
+
+	private int dim = 0;
 	private PrintWriter file;
 
 	/**
@@ -28,9 +29,27 @@ public class PLA {
 	 * @param dim
 	 *            the dim
 	 */
-	public PLA(int dim) {
+	public Pocket(int dim) {
+		this.dim = dim;
 		this.f = new TransferExp();
-		this.n = new Neuron(dim, f, 0.5);
+		this.n = new NeuronenSchicht(1, dim, f, "Pocket");
+	}
+
+	private void copyWeights(double[][] newW) {
+		bestWeights = new double[dim][];
+		for (int i = 0; i < dim; i++) {
+			bestWeights[i] = new double[newW[i].length];
+			for (int e = 0; e < newW[i].length; e++) {
+				bestWeights[i][e] = newW[i][e];
+			}
+		}
+	}
+
+	private void updateWeights(int error) {
+		if (error < bestError) {
+			bestError = error;
+			copyWeights(n.getW());
+		}
 	}
 
 	/**
@@ -41,9 +60,9 @@ public class PLA {
 	 * @param result
 	 *            Der Erwartungswert
 	 */
-	public void train(double[][] werte, double[] result) {
+	public double train(double[][] werte, double[][] result) {
 		try {
-			file = new PrintWriter("Errors_PLA.txt", "UTF-8");
+			file = new PrintWriter("Errors_Pocket.txt", "UTF-8");
 		} catch (FileNotFoundException e) {
 			// TODO Automatisch generierter Erfassungsblock
 			e.printStackTrace();
@@ -51,33 +70,38 @@ public class PLA {
 			// TODO Automatisch generierter Erfassungsblock
 			e.printStackTrace();
 		}
-		int fehler = 1;
+		this.bestError = result.length;
+		int fehler = -1;
 		int i = 0, j = 0;
 		for (j = 0; j < 100000 && fehler != 0; j++) {
 			if (j % 1000 == 0)
 				f.increaseLambda();
-			fehler = 0;
 			for (i = 0; i < werte.length; i++) {
-				double y;
+				double[] y;
 				y = n.train(werte[i], result[i]);
 				// Anzahl Fehler berechnen
 				fehler = 0;
 				for (int k = 0; k < werte.length; k++) {
 					y = n.fire(werte[k]);
-					if (f.toDiskret(y) != result[k]) {
-						fehler++;
+					for (int g = 0; g < dim; g++) {
+						if (f.toDiskret(y[g]) != result[k][g]) {
+							fehler++;
+						}
 					}
 				}
 				if (fehler == 0)
 					break;
-				file.append(fehler + ",\n");
+				file.append(bestError + ",\n");
 				// Setzen neuer gewichte
+				this.updateWeights(fehler);
 			}
 		}
 		System.out.println("Fertig nach " + j);
 		System.out.println("TestAnd Gewichte:");
 		n.print_W();
+		// Am Ende die Besten Gewichte Setzen
 		file.close();
+		return j;
 	}
 
 	/**
@@ -87,7 +111,7 @@ public class PLA {
 	 *            the x
 	 * @return the double
 	 */
-	public double fire(double[] x) {
+	public double[] fire(double[] x) {
 		return n.fire(x);
 	}
 

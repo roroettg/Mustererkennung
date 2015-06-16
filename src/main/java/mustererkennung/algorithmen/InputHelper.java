@@ -1,4 +1,4 @@
-package pla;
+package mustererkennung.algorithmen;
 
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -23,73 +23,56 @@ public class InputHelper {
 			"maxAccY", "maxAccZ", "minAccX", "minAccY", "minAccZ" };
 
 	/** The files_gehen. */
-	private final String[] files_gehen_lern = {
-			"LernDaten/02/gehen.json",
-			"LernDaten/07/gehen.json",
-			"LernDaten/08/gehen.json",
-			"LernDaten/13/gehen.json",
-			"LernDaten/15/gehen.json",
-			"LernDaten/16/gehen.json",
-			"LernDaten/20/gehen.json", };
+	private final String[] files_gehen_lern = { "LernDaten/02/gehen.json",
+			"LernDaten/07/gehen.json", "LernDaten/08/gehen.json",
+			"LernDaten/13/gehen.json", "LernDaten/15/gehen.json",
+			"LernDaten/16/gehen.json", "LernDaten/20/gehen.json", };
 
 	/** The files_sitzen. */
-	private final String[] files_sitzen_lern = {
-			"LernDaten/02/sitzen.json",
-			"LernDaten/07/sitzen.json",
-			"LernDaten/08/sitzen.json",
-			"LernDaten/13/sitzen.json",
-			"LernDaten/15/sitzen.json",
-			"LernDaten/16/sitzen.json",
-			"LernDaten/20/sitzen.json" };
+	private final String[] files_sitzen_lern = { "LernDaten/02/sitzen.json",
+			"LernDaten/07/sitzen.json", "LernDaten/08/sitzen.json",
+			"LernDaten/13/sitzen.json", "LernDaten/15/sitzen.json",
+			"LernDaten/16/sitzen.json", "LernDaten/20/sitzen.json" };
 
-	private final String[] files_joggen_lern = {
-			"LernDaten/02/joggen.json",
-			"LernDaten/07/joggen.json",
-			"LernDaten/08/laufen.json",
-			"LernDaten/13/laufen.json",
-			"LernDaten/15/joggen.json",
-			"LernDaten/16/joggen.json",
-			"LernDaten/20/laufen.json" };
+	private final String[] files_joggen_lern = { "LernDaten/02/joggen.json",
+			"LernDaten/07/joggen.json", "LernDaten/08/laufen.json",
+			"LernDaten/13/laufen.json", "LernDaten/15/joggen.json",
+			"LernDaten/16/joggen.json", "LernDaten/20/laufen.json" };
 
-	private final String[] files_treppe_lern = {
-			"LernDaten/02/treppe.json",
-			"LernDaten/07/treppe.json",
-			"LernDaten/08/treppe.json",
-			"LernDaten/13/treppe.json",
-			"LernDaten/15/treppe.json",
-			"LernDaten/16/treppe.json",
-			"LernDaten/20/treppe.json" };
+	private final String[] files_treppe_lern = { "LernDaten/02/treppe.json",
+			"LernDaten/07/treppe.json", "LernDaten/08/treppe.json",
+			"LernDaten/13/treppe.json", "LernDaten/15/treppe.json",
+			"LernDaten/16/treppe.json", "LernDaten/20/treppe.json" };
+
+	private final String[] files_drehen_lern = { "LernDaten/02/drehen.json",
+			"LernDaten/07/drehen-cw.json", "LernDaten/07/drehen-ccw.json",
+			"LernDaten/08/drehen.json", "LernDaten/13/drehen.json",
+			"LernDaten/15/drehen-cw.json", "LernDaten/13/drehen.json",
+			"LernDaten/15/drehen-ccw.json", "LernDaten/16/drehen.json",
+			"LernDaten/20/drehen.json" };
 
 	/** The files_gehen. */
-	private final String[] files_gehen_test = {
-			"TestDaten/03/gehen3.json",
-			"TestDaten/04/gehen4.json",
-			"TestDaten/05/gehen5.json",
-			"TestDaten/06/gehen6.json",
-			"TestDaten/09/gehen9.json" };
+	private final String[] files_gehen_test = { "TestDaten/03/gehen3.json",
+			"TestDaten/04/gehen4.json", "TestDaten/05/gehen5.json",
+			"TestDaten/06/gehen6.json", "TestDaten/09/gehen9.json" };
 	/** The files_gehen. */
 
-	private final String[] files_sitzen_test = {
-			"TestDaten/03/sitzen3.json",
-			"TestDaten/04/sitzen4.json",
-			"TestDaten/05/sitzen5.json",
-			"TestDaten/06/sitzen6.json",
-			"TestDaten/09/sitzen9.json" };
+	private final String[] files_sitzen_test = { "TestDaten/03/sitzen3.json",
+			"TestDaten/04/sitzen4.json", "TestDaten/05/sitzen5.json",
+			"TestDaten/06/sitzen6.json", "TestDaten/09/sitzen9.json" };
 
-	private final String[] files_joggen_test = {
-			"TestDaten/03/joggen3.json",
-			"TestDaten/04/joggen4.json",
-			"TestDaten/05/joggen5.json",
-			"TestDaten/06/joggen6.json",
-			"TestDaten/09/joggen9.json" };
+	private final String[] files_joggen_test = { "TestDaten/03/joggen3.json",
+			"TestDaten/04/joggen4.json", "TestDaten/05/joggen5.json",
+			"TestDaten/06/joggen6.json", "TestDaten/09/joggen9.json" };
 
+	private final String[] files_treppe_test = { "TestDaten/03/treppe3.json",
+			"TestDaten/04/treppe4.json", "TestDaten/05/treppe5.json",
+			"TestDaten/06/treppe6.json", "TestDaten/09/treppe9.json" };
 
-	private final String[] files_treppe_test = {
-			"TestDaten/03/treppe3.json",
-			"TestDaten/04/treppe4.json",
-			"TestDaten/05/treppe5.json",
-			"TestDaten/06/treppe6.json",
-			"TestDaten/09/treppe9.json" };
+	private final String[] files_drehen_test = { "TestDaten/03/drehen3.json",
+			"TestDaten/04/drehen4.json", "TestDaten/05/drehen5.json",
+			"TestDaten/06/drehen6.json", "TestDaten/09/drehen9.json" };
+
 	/**
 	 * Gets the lern daten.
 	 *
@@ -112,6 +95,9 @@ public class InputHelper {
 			break;
 		case "treppe":
 			file = files_treppe_lern;
+			break;
+		case "drehen":
+			file = files_drehen_lern;
 			break;
 		}
 		if (file != null) {
@@ -144,6 +130,9 @@ public class InputHelper {
 			break;
 		case "treppe":
 			file = files_treppe_test;
+			break;
+		case "drehen":
+			file = files_drehen_test;
 			break;
 		}
 		if (file != null) {
@@ -204,10 +193,10 @@ public class InputHelper {
 	 */
 	public static void main(String[] args) {
 		String[] path = { "LernDaten/02/gehen.json" };
-		for(Merkmal m : new InputHelper().getLernDaten("gehen")){
+		for (Merkmal m : new InputHelper().getLernDaten("gehen")) {
 			System.out.println(m.getBewegungsart());
 		}
-		for(Merkmal m : new InputHelper().getVerificationDaten("joggen")){
+		for (Merkmal m : new InputHelper().getVerificationDaten("joggen")) {
 			System.out.println(m.getBewegungsart());
 		}
 	}

@@ -1,4 +1,4 @@
-package pla;
+package mustererkennung.algorithmen;
 
 public class Merkmal {
 	private String SensorID="";
@@ -78,9 +78,15 @@ public class Merkmal {
 	}
 	
 	public double[] getVector(){
-		double[] vec = new double[2];
+		double[] vec = new double[5];
 		vec[0] = this.averageAccX[0];
-		vec[1] = this.medianAccY[0];
+		vec[1] = this.averageAccY[2];
+		vec[2] = this.rangeAccY[1];
+		vec[3] = this.rangeAccX[0];
+		vec[4] = this.averageAccZ[0];
+		//vec[1] = this.stdAccY[1];
+		//vec[2] = this.maxAccY[1]; // 7 und 3
+		//vec[3] = this.stdAccY[2]; // 5 und 3
 		return vec;
 	}
 
