@@ -25,40 +25,40 @@ public class InputHelper {
 	/** The files_gehen. */
 	private final String[] files_gehen_lern = {
 			"LernDaten/02/gehen.json",
-			"Lerndaten/07/gehen.json",
-			"Lerndaten/08/gehen.json",
-			"Lerndaten/13/gehen.json",
-			"Lerndaten/15/gehen.json",
-			"Lerndaten/16/gehen.json",
-			"Lerndaten/20/gehen.json", };
+			"LernDaten/07/gehen.json",
+			"LernDaten/08/gehen.json",
+			"LernDaten/13/gehen.json",
+			"LernDaten/15/gehen.json",
+			"LernDaten/16/gehen.json",
+			"LernDaten/20/gehen.json", };
 
 	/** The files_sitzen. */
 	private final String[] files_sitzen_lern = {
-			"Lerndaten/02/sitzen.json",
-			"Lerndaten/07/sitzen.json",
-			"Lerndaten/08/sitzen.json",
-			"Lerndaten/13/sitzen.json",
-			"Lerndaten/15/sitzen.json",
-			"Lerndaten/16/sitzen.json",
-			"Lerndaten/20/sitzen.json" };
+			"LernDaten/02/sitzen.json",
+			"LernDaten/07/sitzen.json",
+			"LernDaten/08/sitzen.json",
+			"LernDaten/13/sitzen.json",
+			"LernDaten/15/sitzen.json",
+			"LernDaten/16/sitzen.json",
+			"LernDaten/20/sitzen.json" };
 
 	private final String[] files_joggen_lern = {
-			"Lerndaten/02/joggen.json",
-			"Lerndaten/07/joggen.json",
-			"Lerndaten/08/laufen.json",
-			"Lerndaten/13/laufen.json",
-			"Lerndaten/15/joggen.json",
-			"Lerndaten/16/joggen.json",
-			"Lerndaten/20/laufen.json" };
+			"LernDaten/02/joggen.json",
+			"LernDaten/07/joggen.json",
+			"LernDaten/08/laufen.json",
+			"LernDaten/13/laufen.json",
+			"LernDaten/15/joggen.json",
+			"LernDaten/16/joggen.json",
+			"LernDaten/20/laufen.json" };
 
 	private final String[] files_treppe_lern = {
-			"Lerndaten/02/treppe.json",
-			"Lerndaten/07/treppe.json",
-			"Lerndaten/08/treppe.json",
-			"Lerndaten/13/treppe.json",
-			"Lerndaten/15/treppe.json",
-			"Lerndaten/16/treppe.json",
-			"Lerndaten/20/treppe.json" };
+			"LernDaten/02/treppe.json",
+			"LernDaten/07/treppe.json",
+			"LernDaten/08/treppe.json",
+			"LernDaten/13/treppe.json",
+			"LernDaten/15/treppe.json",
+			"LernDaten/16/treppe.json",
+			"LernDaten/20/treppe.json" };
 
 	/** The files_gehen. */
 	private final String[] files_gehen_test = {
@@ -204,7 +204,12 @@ public class InputHelper {
 	 */
 	public static void main(String[] args) {
 		String[] path = { "LernDaten/02/gehen.json" };
-		new InputHelper().getValues(path[0], "gehen");
+		for(Merkmal m : new InputHelper().getLernDaten("gehen")){
+			System.out.println(m.getBewegungsart());
+		}
+		for(Merkmal m : new InputHelper().getVerificationDaten("joggen")){
+			System.out.println(m.getBewegungsart());
+		}
 	}
 
 }

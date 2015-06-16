@@ -20,12 +20,15 @@ public class TestKNN {
 		ArrayList<Merkmal> test  = input.getVerificationDaten("gehen");
 		test.addAll(input.getVerificationDaten("sitzen"));
 		System.out.println("\nTest testKNN2");
+		int fehler=0;
 		for(Merkmal m : test){
 			System.out.println(m.getBewegungsart() +" == " + knn.classify(m));
+			if(!m.getBewegungsart().equals(knn.classify(m))){
+				fehler++;
+			}
 		}
-		for(Merkmal m : test){
-			assertTrue((m.getBewegungsart() == knn.classify(m)));
-		}
+		System.out.println("fehlerrate:"  + fehler +" von "+test.size());
+		assertTrue(fehler == 0);
 	}
 
 	
@@ -38,12 +41,15 @@ public class TestKNN {
 		ArrayList<Merkmal> test  = input.getVerificationDaten("gehen");
 		test.addAll(input.getVerificationDaten("sitzen"));
 		System.out.println("\nTest testKNN2Manhattan");
+		int fehler=0;
 		for(Merkmal m : test){
 			System.out.println(m.getBewegungsart() +" == " + knn.classify(m));
+			if(!m.getBewegungsart().equals(knn.classify(m))){
+				fehler++;
+			}
 		}
-		for(Merkmal m : test){
-			assertTrue((m.getBewegungsart() == knn.classify(m)));
-		}
+		System.out.println("fehlerrate:"  + fehler +" von "+test.size());
+		assertTrue(fehler == 0);
 	}
 	
 	@Test
@@ -57,12 +63,15 @@ public class TestKNN {
 		test.addAll(input.getVerificationDaten("sitzen"));
 		test.addAll(input.getVerificationDaten("joggen"));
 		System.out.println("\nTest testKNN3Euklid");
+		int fehler=0;
 		for(Merkmal m : test){
 			System.out.println(m.getBewegungsart() +" == " + knn.classify(m));
+			if(!m.getBewegungsart().equals(knn.classify(m))){
+				fehler++;
+			}
 		}
-		for(Merkmal m : test){
-			assertTrue((m.getBewegungsart() == knn.classify(m)));
-		}
+		System.out.println("fehlerrate:"  + fehler +" von "+test.size());
+		assertTrue(fehler == 0);
 	}
 	
 	@Test
@@ -78,11 +87,14 @@ public class TestKNN {
 		test.addAll(input.getVerificationDaten("joggen"));
 		test.addAll(input.getVerificationDaten("treppe"));
 		System.out.println("\nTest testKNN3Euklid");
+		int fehler=0;
 		for(Merkmal m : test){
 			System.out.println(m.getBewegungsart() +" == " + knn.classify(m));
+			if(!m.getBewegungsart().equals(knn.classify(m))){
+				fehler++;
+			}
 		}
-		for(Merkmal m : test){
-			assertTrue((m.getBewegungsart() == knn.classify(m)));
-		}
+		System.out.println("fehlerrate:"  + fehler +" von "+test.size());
+		assertTrue(fehler == 0);
 	}
 }

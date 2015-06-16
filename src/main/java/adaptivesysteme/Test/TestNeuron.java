@@ -1,12 +1,13 @@
 package adaptivesysteme.Test;
 
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
 import adaptivesysteme.NeuronNetz.Neuron;
 import adaptivesysteme.NeuronNetz.TransferExp;
 import adaptivesysteme.NeuronNetz.TransferStufe;
 import adaptivesysteme.NeuronNetz.Transferfunktion;
-import org.junit.Test;
-
-import static org.junit.Assert.assertTrue;
 
 public class TestNeuron {
 
