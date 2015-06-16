@@ -189,13 +189,22 @@ public class InputHelper {
 	 *            the arguments
 	 */
 	public static void main(String[] args) {
-		String[] path = { "LernDaten/02/gehen.json" };
-		for (Merkmal m : new InputHelper().getLernDaten("gehen")) {
-			System.out.println(m.getBewegungsart() + " , " + m.getAverageAccX()[0]);
-		}
-		for (Merkmal m : new InputHelper().getVerificationDaten("sitzen")) {
-			System.out.println(m.getBewegungsart() + " , " + m.getAverageAccX()[0]);
-		}
+		InputHelper helper = new InputHelper();
+		System.out.println("Anzahl Lern - Datensätze");
+		System.out.println("Gehen: " + helper.getLernDaten("gehen").size());
+		System.out.println("Sitzen: " + helper.getLernDaten("sitzen").size());
+		System.out.println("Treppe: " + helper.getLernDaten("treppe").size());
+		System.out.println("Joggen: " + helper.getLernDaten("joggen").size());
+		System.out.println("Drehen: " + helper.getLernDaten("drehen").size());
+		
+		System.out.println("Anzahl Test - Datensätze");
+		System.out.println("Gehen: " + helper.getVerificationDaten("gehen").size());
+		System.out.println("Sitzen: " + helper.getVerificationDaten("sitzen").size());
+		System.out.println("Treppe: " + helper.getVerificationDaten("treppe").size());
+		System.out.println("Joggen: " + helper.getVerificationDaten("joggen").size());
+		System.out.println("Drehen: " + helper.getVerificationDaten("drehen").size());
+		
+
 	}
 
 }

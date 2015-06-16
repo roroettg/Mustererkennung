@@ -99,6 +99,7 @@ public class Pocket {
 		System.out.println("Fertig nach " + j);
 		System.out.println("TestAnd Gewichte:");
 		n.print_W();
+		n.setW(bestWeights);
 		// Am Ende die Besten Gewichte Setzen
 		file.close();
 		return j;

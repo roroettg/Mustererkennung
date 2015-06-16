@@ -225,5 +225,6 @@ public class Neuron {
 	public void setLernRate(double r) {
 		this.lern_rate = r;
 	}
+	
 
 }

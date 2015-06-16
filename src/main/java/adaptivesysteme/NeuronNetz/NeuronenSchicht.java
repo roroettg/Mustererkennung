@@ -20,10 +20,13 @@ public class NeuronenSchicht {
 	/**
 	 * Instantiates eine neuronenSchicht.
 	 *
-	 * @param input   Die Anzahl der Eingabewerte
-	 * @param output  Die Anzahl der Ausgangswerte = Anzahl der Neuronen in der
-	 *                Schicht
-	 * @param f       Die Transferfunktion für die Neuronen
+	 * @param input
+	 *            Die Anzahl der Eingabewerte
+	 * @param output
+	 *            Die Anzahl der Ausgangswerte = Anzahl der Neuronen in der
+	 *            Schicht
+	 * @param f
+	 *            Die Transferfunktion für die Neuronen
 	 */
 	public NeuronenSchicht(int input, int output, Transferfunktion f) {
 		neurons = new ArrayList<Neuron>();
@@ -38,11 +41,15 @@ public class NeuronenSchicht {
 	/**
 	 * Instantiates eine neuronenSchicht.
 	 *
-	 * @param input   Die Anzahl der Eingabewerte
-	 * @param output  Die Anzahl der Ausgangswerte = Anzahl der Neuronen in der
-	 *                Schicht
-	 * @param f       Die Transferfunktion für die Neuronen
-	 * @param name    Ein String der den Namen der Schicht angibt
+	 * @param input
+	 *            Die Anzahl der Eingabewerte
+	 * @param output
+	 *            Die Anzahl der Ausgangswerte = Anzahl der Neuronen in der
+	 *            Schicht
+	 * @param f
+	 *            Die Transferfunktion für die Neuronen
+	 * @param name
+	 *            Ein String der den Namen der Schicht angibt
 	 */
 	public NeuronenSchicht(int input, int output, Transferfunktion f, String name) {
 		neurons = new ArrayList<Neuron>();
@@ -74,7 +81,8 @@ public class NeuronenSchicht {
 	/**
 	 * Fire.
 	 *
-	 * @param x   the Eingabewerte
+	 * @param x
+	 *            the Eingabewerte
 	 * @return the double[] Die Ergebnisse der Neuronen der Schicht
 	 */
 	public double[] fire(double[] x) {
@@ -97,8 +105,10 @@ public class NeuronenSchicht {
 	/**
 	 * Trainiert die einzelnen Neuronen der Schicht
 	 *
-	 * @param x   Eingabewerte
-	 * @param y   Der Erwartungswert
+	 * @param x
+	 *            Eingabewerte
+	 * @param y
+	 *            Der Erwartungswert
 	 */
 	public double[] train(double[] x, double[] y) {
 		double[] ret = new double[size];
@@ -111,12 +121,18 @@ public class NeuronenSchicht {
 	/**
 	 * Train net.
 	 *
-	 * @param last Boolean ob es die letzte Schicht im Netz ist
-	 * @param y Der Erwartungswert
-	 * @param o_prev die o's der vorgelagerten Schicht
-	 * @param w_prev Die Gewichte der vorgelagerten Schicht
-	 * @param size_prev Die Größe der Vorgelagerten Schicht
-	 * @return the double[] Die o's der Schicht um in der nächsten verwendet werden zu können
+	 * @param last
+	 *            Boolean ob es die letzte Schicht im Netz ist
+	 * @param y
+	 *            Der Erwartungswert
+	 * @param o_prev
+	 *            die o's der vorgelagerten Schicht
+	 * @param w_prev
+	 *            Die Gewichte der vorgelagerten Schicht
+	 * @param size_prev
+	 *            Die Größe der Vorgelagerten Schicht
+	 * @return the double[] Die o's der Schicht um in der nächsten verwendet
+	 *         werden zu können
 	 */
 	public double[] trainNet(boolean last, double[] y, double[] o_prev, double[][] w_prev, double size_prev) {
 		double[] o_akt = new double[neurons.size()];
@@ -129,7 +145,7 @@ public class NeuronenSchicht {
 				double ow;
 				ow = 0;
 				for (int j = 0; j < size_prev; j++) {
-					ow += (o_prev[j] * w_prev[j][i+1]);
+					ow += (o_prev[j] * w_prev[j][i + 1]);
 				}
 				o_akt[i] = neurons.get(i).trainMitte(ow);
 			}
@@ -152,5 +168,15 @@ public class NeuronenSchicht {
 			}
 		}
 		return ws;
+	}
+
+	public void setW(double[][] w) {
+		if (w.length == this.neurons.size()) {
+			int i = 0;
+			for (Neuron n : neurons) {
+				n.setW(w[i++]);
+			}
+		}
+
 	}
 }
