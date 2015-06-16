@@ -37,42 +37,44 @@ public class Merkmal {
 	}
 	
 	public void setByTag(String tag, double[] value) {
-		if (tag == "averageAccX") {
+		if (tag == "avgAccXWithDelta") {
 			averageAccX = value;
-		} else if (tag == "averageAccY") {
+		} else if (tag == "avgAccYWithDelta") {
 			averageAccY = value;
-		} else if (tag == "averageAccZ") {
+		} else if (tag == "avgAccZWithDelta") {
 			averageAccZ = value;
-		} else if (tag == "stdAccX") {
+		} else if (tag == "stdAccXWithDelta") {
 			stdAccX = value;
-		} else if (tag == "stdAccY") {
+		} else if (tag == "stdAccYWithDelta") {
 			stdAccY = value;
-		} else if (tag == "stdAccZ") {
+		} else if (tag == "stdAccZWithDelta") {
 			stdAccZ = value;
-		} else if (tag == "medianAccX") {
+		} else if (tag == "medianAccXWithDelta") {
 			medianAccX = value;
-		} else if (tag == "medianAccY") {
+		} else if (tag == "medianAccYWithDelta") {
 			medianAccY = value;
-		} else if (tag == "medianAccZ") {
+		} else if (tag == "medianAccZWithDelta") {
 			medianAccZ = value;
-		} else if (tag == "rangeAccX") {
+		} else if (tag == "rangeAccXWithDelta") {
 			rangeAccX = value;
-		} else if (tag == "rangeAccY") {
+		} else if (tag == "rangeAccYWithDelta") {
 			rangeAccY = value;
-		} else if (tag == "rangeAccZ") {
+		} else if (tag == "rangeAccZWithDelta") {
 			rangeAccZ = value;
-		} else if (tag == "maxAccX") {
+		} else if (tag == "maxAccXWithDelta") {
 			maxAccX = value;
-		} else if (tag == "maxAccY") {
+		} else if (tag == "maxAccYWithDelta") {
 			maxAccY = value;
-		} else if (tag == "maxAccZ") {
+		} else if (tag == "maxAccZWithDelta") {
 			maxAccZ = value;
-		} else if (tag == "minAccX") {
+		} else if (tag == "minAccXWithDelta") {
 			minAccX = value;
-		} else if (tag == "minAccY") {
+		} else if (tag == "minAccYWithDelta") {
 			minAccY = value;
-		} else if (tag == "minAccZ") {
+		} else if (tag == "minAccZWithDelta") {
 			minAccZ = value;
+		} else {
+			System.out.println("Keinen Parameter gefunden");
 		}
 
 	}
@@ -82,10 +84,9 @@ public class Merkmal {
 		vec[0] = this.averageAccX[0];
 		vec[1] = this.averageAccY[2];
 		vec[2] = this.rangeAccY[1];
-		vec[3] = this.rangeAccX[0];
+		//vec[3] = this.rangeAccX[0];
 		vec[4] = this.averageAccZ[0];
-		//vec[1] = this.stdAccY[1];
-		//vec[2] = this.maxAccY[1]; // 7 und 3
+		vec[3] = this.maxAccY[1]; // 7 und 3
 		//vec[3] = this.stdAccY[2]; // 5 und 3
 		return vec;
 	}
