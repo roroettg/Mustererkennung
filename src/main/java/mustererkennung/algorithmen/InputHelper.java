@@ -203,8 +203,6 @@ public class InputHelper {
 		System.out.println("Treppe: " + helper.getVerificationDaten("treppe").size());
 		System.out.println("Joggen: " + helper.getVerificationDaten("joggen").size());
 		System.out.println("Drehen: " + helper.getVerificationDaten("drehen").size());
-		
-
 	}
 
 }
