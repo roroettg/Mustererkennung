@@ -39,6 +39,7 @@ public class TreeNode {
 	private final int MAX_TREE_DEPTH = 1000;
 
 	private MerkmalFinder findmerkmal;
+
 	/**
 	 * Instantiates a new tree node.
 	 *
@@ -49,7 +50,7 @@ public class TreeNode {
 	 */
 	public TreeNode(String t, int rang, MerkmalFinder finder) {
 		this.findmerkmal = finder;
-		this.tag = "\t" + t;
+		this.tag = t;
 		this.rang = rang;
 		this.childs = new TreeNode[2];
 	}
@@ -81,6 +82,10 @@ public class TreeNode {
 		}
 	}
 
+	public String getTag() {
+		return this.tag;
+	}
+
 	/**
 	 * Generate tree.
 	 *
@@ -94,9 +99,9 @@ public class TreeNode {
 		} else {
 			this.split = this.splitAttribut(ms);
 			ArrayList<Merkmal>[] x12 = this.splitArray(ms, this.split, this.attributIndex);
-			this.childs[0] = new TreeNode(this.tag + "," + x12[0].size(), this.rang + 1, this.findmerkmal);
+			this.childs[0] = new TreeNode(this.tag + "1", this.rang + 1, this.findmerkmal);
 			this.childs[0].generateTree(x12[0]);
-			this.childs[1] = new TreeNode(this.tag + "," + x12[1].size(), this.rang + 1, this.findmerkmal);
+			this.childs[1] = new TreeNode(this.tag + "2", this.rang + 1, this.findmerkmal);
 			this.childs[1].generateTree(x12[1]);
 		}
 		return 0;
@@ -188,7 +193,7 @@ public class TreeNode {
 		double minEnt = this.getSplitEntropy(splitArray(ms, xi, 0), ms);
 		double bestf = xi;
 		double e = 0;
-		int attribIndex=0;
+		int attribIndex = 0;
 		ArrayList<Merkmal> x12[];
 		for (Merkmal m : ms) {
 			for (int i = 0; i < findmerkmal.getSplitAttribut(m).length; i++) {
@@ -238,9 +243,21 @@ public class TreeNode {
 		if (leaf) {
 			System.out.println(tag + " -> " + this.klasse);
 		} else {
-			System.out.println(this.tag + " "+ findmerkmal.getSplitAttributName()[attributIndex] +":( xi <= " + this.split + ")");
+			System.out.println(this.tag + " " + findmerkmal.getSplitAttributName()[attributIndex] + ":( xi <= " + this.split + ")");
 			childs[0].printTree();
 			childs[1].printTree();
+		}
+	}
+
+	public void printDot() {
+		if (!leaf) {
+			System.out.println(this.tag + " -> " + childs[0].getTag() +";");
+			System.out.println(this.tag + " -> " + childs[1].getTag()+";");
+			System.out.println(this.tag + " [label=\"" + findmerkmal.getSplitAttributName()[attributIndex] + ":( xi <= " + this.split + ")\"]"+";");
+			childs[0].printDot();
+			childs[1].printDot();
+		} else {
+			System.out.println(this.tag + " [label=\"" + this.klasse + "\"]"+";");
 		}
 	}
 
