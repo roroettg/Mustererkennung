@@ -1,6 +1,7 @@
 package mustererkennung.algorithmen;
 
 import adaptivesysteme.NeuronNetz.Neuron;
+import adaptivesysteme.NeuronNetz.NeuronenSchicht;
 import adaptivesysteme.NeuronNetz.TransferExp;
 import adaptivesysteme.NeuronNetz.Transferfunktion;
 
@@ -15,7 +16,7 @@ import java.io.UnsupportedEncodingException;
 public class PLA {
 
 	/** The n. */
-	private Neuron n;
+	private NeuronenSchicht n;
 
 	/** The f. */
 	private Transferfunktion f;
@@ -28,9 +29,9 @@ public class PLA {
 	 * @param dim
 	 *            the dim
 	 */
-	public PLA(int dim) {
+	public PLA(int dim, int input) {
 		this.f = new TransferExp();
-		this.n = new Neuron(dim, f, 0.5);
+		this.n = new NeuronenSchicht(input, dim, f);
 	}
 
 	/**
@@ -41,7 +42,7 @@ public class PLA {
 	 * @param result
 	 *            Der Erwartungswert
 	 */
-	public void train(double[][] werte, double[] result) {
+	public void train(double[][] werte, double[][] result) {
 		try {
 			file = new PrintWriter("Errors_PLA.txt", "UTF-8");
 		} catch (FileNotFoundException e) {
@@ -58,14 +59,17 @@ public class PLA {
 				f.increaseLambda();
 			fehler = 0;
 			for (i = 0; i < werte.length; i++) {
-				double y;
+				double[] y;
 				y = n.train(werte[i], result[i]);
 				// Anzahl Fehler berechnen
 				fehler = 0;
 				for (int k = 0; k < werte.length; k++) {
 					y = n.fire(werte[k]);
-					if (f.toDiskret(y) != result[k]) {
-						fehler++;
+					for(int e =0; e< y.length; e++){
+						if (f.toDiskret(y[e]) != result[k][e]) {
+							fehler++;
+							break;
+						}
 					}
 				}
 				if (fehler == 0)
@@ -87,7 +91,7 @@ public class PLA {
 	 *            the x
 	 * @return the double
 	 */
-	public double fire(double[] x) {
+	public double[] fire(double[] x) {
 		return n.fire(x);
 	}
 
