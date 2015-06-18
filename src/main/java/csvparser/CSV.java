@@ -92,9 +92,9 @@ public class CSV {
      */
     public static void main(String[] args) {
         File file;
-        int delta = 10000;
+        int delta = 20000;
         if(args.length <= 0) {
-            file = new File("LernDaten/15/sitzen.csv");
+            file = new File("LernDaten/02/gehen.csv");
         } else {
             file = new File(args[0]);
         }
@@ -114,6 +114,7 @@ public class CSV {
 
             JSONArray avgAccXD = new JSONArray();
             avgAccXD.addAll(StatisticHelper.averageWithDelta(sensor.getAccelX(), delta));
+
             JSONObject avgAccX = new JSONObject();
             avgAccX.put("avgAccXWithDelta", avgAccXD);
             JSONArray avgAccYD = new JSONArray();
@@ -244,7 +245,7 @@ public class CSV {
 
         }
 
-
+//
         FileWriter fw = null;
         String newPath = file.toString().replace(".csv", ".json");
         try {

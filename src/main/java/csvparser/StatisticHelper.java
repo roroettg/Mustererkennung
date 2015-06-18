@@ -21,23 +21,28 @@ public class StatisticHelper {
     }
 
     public static List<Double> minValueWithDelta(Map<Long, Double> data, int delta) {
-        List<Double> processedData = new ArrayList<Double>();
-        List<Double> subData = new ArrayList<Double>();
-        Long start = (Long) data.keySet().toArray()[0];
-        for(Long timestamp : data.keySet()) {
-            if(timestamp-start > delta) {
-                processedData.add(minValue(subData));
-                subData.clear();
-                start = timestamp;
-            } else {
-                subData.add(data.get(timestamp));
+        List<Double> processedData = new LinkedList<>();
+        List<Double> subData = new LinkedList<Double>();
+        Long[] timestamps = new Long[data.keySet().size()];
+        data.keySet().toArray(timestamps);
+        Double[] values = new Double[data.values().size()];
+        data.values().toArray(values);
+
+
+        for(int i = 0; i < timestamps.length-1; i++) {
+            Long start = timestamps[i];
+            Long nextTimestamp = timestamps[i];
+            for(int j = 0; nextTimestamp - delta <= start && j < timestamps.length-1; j++, nextTimestamp = timestamps[j]) {
+                subData.add(values[j]);
+            }
+            processedData.add(minValue(subData));
+            subData.clear();
+            Long nextStep = start;
+            while (nextStep - start < 1000 && i < timestamps.length-1) {
+                i++;
+                nextStep = timestamps[i];
             }
         }
-        if(processedData.size() == 0) {
-            processedData.add(minValue(subData));
-        }
-
-
         return processedData;
     }
 
@@ -56,23 +61,28 @@ public class StatisticHelper {
     }
 
     public static List<Double> maxValueWithDelta(Map<Long, Double> data, int delta) {
-        List<Double> processedData = new ArrayList<Double>();
-        List<Double> subData = new ArrayList<Double>();
-        Long start = (Long) data.keySet().toArray()[0];
-        for(Long timestamp : data.keySet()) {
-            if(timestamp-start > delta) {
-                processedData.add(maxValue(subData));
-                subData.clear();
-                start = timestamp;
-            } else {
-                subData.add(data.get(timestamp));
+        List<Double> processedData = new LinkedList<>();
+        List<Double> subData = new LinkedList<Double>();
+        Long[] timestamps = new Long[data.keySet().size()];
+        data.keySet().toArray(timestamps);
+        Double[] values = new Double[data.values().size()];
+        data.values().toArray(values);
+
+
+        for(int i = 0; i < timestamps.length-1; i++) {
+            Long start = timestamps[i];
+            Long nextTimestamp = timestamps[i];
+            for(int j = 0; nextTimestamp - delta <= start && j < timestamps.length-1; j++, nextTimestamp = timestamps[j]) {
+                subData.add(values[j]);
+            }
+            processedData.add(maxValue(subData));
+            subData.clear();
+            Long nextStep = start;
+            while (nextStep - start < 1000 && i < timestamps.length-1) {
+                i++;
+                nextStep = timestamps[i];
             }
         }
-        if(processedData.size() == 0) {
-            processedData.add(maxValue(subData));
-        }
-
-
         return processedData;
     }
 
@@ -85,23 +95,28 @@ public class StatisticHelper {
     }
 
     public static List<Double> averageWithDelta(Map<Long, Double> data, int delta) {
-        List<Double> processedData = new ArrayList<Double>();
-        List<Double> subData = new ArrayList<Double>();
-        Long start = (Long) data.keySet().toArray()[0];
-        for(Long timestamp : data.keySet()) {
-            if(timestamp-start > delta) {
-                processedData.add(average(subData));
-                subData.clear();
-                start = timestamp;
-            } else {
-                subData.add(data.get(timestamp));
+        List<Double> processedData = new LinkedList<>();
+        List<Double> subData = new LinkedList<Double>();
+        Long[] timestamps = new Long[data.keySet().size()];
+        data.keySet().toArray(timestamps);
+        Double[] values = new Double[data.values().size()];
+        data.values().toArray(values);
+
+
+        for(int i = 0; i < timestamps.length-1; i++) {
+            Long start = timestamps[i];
+            Long nextTimestamp = start;
+            for(int j = 0; nextTimestamp - delta <= start && j < timestamps.length-1; j++, nextTimestamp = timestamps[j]) {
+                subData.add(values[j]);
+            }
+            processedData.add(average(subData));
+            subData.clear();
+            Long nextStep = start;
+            while (nextStep - start < 1000 && i < timestamps.length-1) {
+                i++;
+                nextStep = timestamps[i];
             }
         }
-        if(processedData.size() == 0) {
-            processedData.add(average(subData));
-        }
-
-
         return processedData;
     }
 
@@ -116,23 +131,29 @@ public class StatisticHelper {
     }
 
     public static List<Double> standardDeviationWithDelta(Map<Long, Double> data, int delta) {
-        List<Double> processedData = new ArrayList<Double>();
-        List<Double> subData = new ArrayList<Double>();
-        Long start = (Long) data.keySet().toArray()[0];
-        for(Long timestamp : data.keySet()) {
-            if(timestamp-start > delta) {
-                processedData.add(standardDeviation(subData));
-                subData.clear();
-                start = timestamp;
-            } else {
-                subData.add(data.get(timestamp));
+        List<Double> processedData = new LinkedList<>();
+        List<Double> subData = new LinkedList<Double>();
+        Long[] timestamps = new Long[data.keySet().size()];
+        data.keySet().toArray(timestamps);
+        Double[] values = new Double[data.values().size()];
+        data.values().toArray(values);
+
+
+        for(int i = 0; i < timestamps.length-1; i++) {
+            Long start = timestamps[i];
+            Long nextTimestamp = timestamps[i];
+            for(int j = 0; nextTimestamp - delta <= start && j < timestamps.length-1; j++, nextTimestamp = timestamps[j]) {
+                subData.add(values[j]);
             }
-        }
-        if(processedData.size() == 0) {
             processedData.add(standardDeviation(subData));
+            subData.clear();
+            Long nextStep = start;
+            while (nextStep - start < 1000 && i < timestamps.length-1) {
+                i++;
+                nextStep = timestamps[i];
+            }
+
         }
-
-
         return processedData;
     }
 
@@ -154,23 +175,28 @@ public class StatisticHelper {
         return median;
     }
     public static List<Double> medianWithDelta(Map<Long, Double> data, int delta) {
-        List<Double> processedData = new ArrayList<Double>();
-        List<Double> subData = new ArrayList<Double>();
-        Long start = (Long) data.keySet().toArray()[0];
-        for(Long timestamp : data.keySet()) {
-            if(timestamp-start > delta) {
-                processedData.add(median(subData));
-                subData.clear();
-                start = timestamp;
-            } else {
-                subData.add(data.get(timestamp));
+        List<Double> processedData = new LinkedList<>();
+        List<Double> subData = new LinkedList<Double>();
+        Long[] timestamps = new Long[data.keySet().size()];
+        data.keySet().toArray(timestamps);
+        Double[] values = new Double[data.values().size()];
+        data.values().toArray(values);
+
+
+        for(int i = 0; i < timestamps.length-1; i++) {
+            Long start = timestamps[i];
+            Long nextTimestamp = timestamps[i];
+            for(int j = 0; nextTimestamp - delta <= start && j < timestamps.length-1; j++, nextTimestamp = timestamps[j]) {
+                subData.add(values[j]);
+            }
+            processedData.add(median(subData));
+            subData.clear();
+            Long nextStep = start;
+            while (nextStep - start < 1000 && i < timestamps.length-1) {
+                i++;
+                nextStep = timestamps[i];
             }
         }
-        if(processedData.size() == 0) {
-            processedData.add(median(subData));
-        }
-
-
         return processedData;
     }
 
@@ -183,23 +209,28 @@ public class StatisticHelper {
     }
 
     public static List<Double> rangeWithDelta(Map<Long, Double> data, int delta) {
-        List<Double> processedData = new ArrayList<Double>();
-        List<Double> subData = new ArrayList<Double>();
-        Long start = (Long) data.keySet().toArray()[0];
-        for(Long timestamp : data.keySet()) {
-            if(timestamp-start > delta) {
-                processedData.add(range(subData));
-                subData.clear();
-                start = timestamp;
-            } else {
-                subData.add(data.get(timestamp));
+        List<Double> processedData = new LinkedList<>();
+        List<Double> subData = new LinkedList<Double>();
+        Long[] timestamps = new Long[data.keySet().size()];
+        data.keySet().toArray(timestamps);
+        Double[] values = new Double[data.values().size()];
+        data.values().toArray(values);
+
+
+        for(int i = 0; i < timestamps.length-1; i++) {
+            Long start = timestamps[i];
+            Long nextTimestamp = timestamps[i];
+            for(int j = 0; nextTimestamp - delta <= start && j < timestamps.length-1; j++, nextTimestamp = timestamps[j]) {
+                subData.add(values[j]);
+            }
+            processedData.add(range(subData));
+            subData.clear();
+            Long nextStep = start;
+            while (nextStep - start < 1000 && i < timestamps.length-1) {
+                i++;
+                nextStep = timestamps[i];
             }
         }
-        if(processedData.size() == 0) {
-            processedData.add(range(subData));
-        }
-
-
         return processedData;
     }
 }
