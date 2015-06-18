@@ -72,6 +72,8 @@ public class TestEntscheidnungsbaum {
 		ms.add(input.getLernDaten("gehen").get(0));
 		n.generateTree(ms);
 		n.printTree();
+		System.out.println("----------------------------");
+		n.printDot();
 		// Verify Trainingsmaterial
 		for (Merkmal m : ms) {
 			System.out.println(n.classify(m) + " == " + m.getBewegungsart());
@@ -89,6 +91,8 @@ public class TestEntscheidnungsbaum {
 		ms.addAll(input.getLernDaten("gehen"));
 		n.generateTree(ms);
 		n.printTree();
+		System.out.println("----------------------------------");
+		n.printDot();
 		// Verify Trainingsmaterial
 		for (Merkmal m : ms) {
 			System.out.println(n.classify(m) + " == " + m.getBewegungsart());
@@ -150,6 +154,8 @@ public class TestEntscheidnungsbaum {
 		ms.addAll(input.getLernDaten("sitzen"));
 		n.generateTree(ms);
 		n.printTree();
+		System.out.println("-----------------------------");
+		n.printDot();
 		// Verify Trainingsmaterial
 		for (Merkmal m : ms) {
 			System.out.println("LernTest " + n.classify(m) + " == " + m.getBewegungsart());

@@ -29,14 +29,15 @@ public class Pocket {
 	 * @param dim
 	 *            the dim
 	 */
-	public Pocket(int dim) {
+	public Pocket(int dim, int inputs) {
 		this.dim = dim;
 		this.f = new TransferExp();
-		this.n = new NeuronenSchicht(1, dim, f, "Pocket");
+		this.n = new NeuronenSchicht(inputs, dim, f, "Pocket");
 	}
 
 	private void copyWeights(double[][] newW) {
 		bestWeights = new double[dim][];
+		System.out.println("Copy Weights");
 		for (int i = 0; i < dim; i++) {
 			bestWeights[i] = new double[newW[i].length];
 			for (int e = 0; e < newW[i].length; e++) {
@@ -70,7 +71,8 @@ public class Pocket {
 			// TODO Automatisch generierter Erfassungsblock
 			e.printStackTrace();
 		}
-		this.bestError = result.length;
+		this.bestError = result.length+1;
+		copyWeights(n.getW());
 		int fehler = -1;
 		int i = 0, j = 0;
 		for (j = 0; j < 100000 && fehler != 0; j++) {

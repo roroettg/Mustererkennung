@@ -12,16 +12,16 @@ public class TestPocket {
 
 	private String bewegung1 = "gehen";
 	private String bewegung2 = "sitzen";
-	
-	public double getMerkmal(Merkmal m){
-		return m.getRangeAccY()[0];     //ok,ok,23
-		//return m.getRangeAccZ()[0];	//ok,  ,
-		//return m.getMaxAccX()[1];     //  ,ok,
-		//return m.getMaxAccY()[1];     // 5,ok, 5
-		//return m.getAverageAccY()[2]; // 4, 4, 2
-		//return m.getAverageAccX()[2]; // 2, 2, 1 
+
+	public double getMerkmal(Merkmal m) {
+		return m.getRangeAccX()[0]; // ok,ok,23
+		// return m.getRangeAccZ()[0]; //ok, ,
+		// return m.getMaxAccX()[1]; // ,ok,
+		// return m.getMaxAccY()[1]; // 5,ok, 5
+		// return m.getAverageAccY()[2]; // 4, 4, 2
+		// return m.getAverageAccX()[2]; // 2, 2, 1
 	}
-	
+
 	@Test
 	public void test() {
 		InputHelper helper = new InputHelper();
@@ -44,7 +44,7 @@ public class TestPocket {
 			werte[i][0] = werte[i][0] / max;
 		}
 
-		Pocket p = new Pocket(1);
+		Pocket p = new Pocket(1, 1);
 		System.out.println("Fertig nach " + p.train(werte, result) + " Iterationen");
 
 		// Testen des lernens
@@ -56,11 +56,11 @@ public class TestPocket {
 			verify[i++][0] = this.getMerkmal(m) / max;
 			System.out.println(m.getBewegungsart() + this.getMerkmal(m));
 		}
-		int fehler =0;
+		int fehler = 0;
 		for (i = 0; i < mV.size(); i++) {
 			double loesung = (mV.get(i).getBewegungsart() == bewegung1 ? 1 : 0);
 			System.out.println(loesung + " " + p.getF().toDiskret(p.fire(verify[i])[0]) + " Soll: " + mV.get(i).getBewegungsart());
-			if(loesung != p.getF().toDiskret(p.fire(verify[i])[0])){
+			if (loesung != p.getF().toDiskret(p.fire(verify[i])[0])) {
 				fehler++;
 			}
 		}

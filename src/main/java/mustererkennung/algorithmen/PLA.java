@@ -1,13 +1,12 @@
 package mustererkennung.algorithmen;
 
-import adaptivesysteme.NeuronNetz.Neuron;
-import adaptivesysteme.NeuronNetz.NeuronenSchicht;
-import adaptivesysteme.NeuronNetz.TransferExp;
-import adaptivesysteme.NeuronNetz.Transferfunktion;
-
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+
+import adaptivesysteme.NeuronNetz.NeuronenSchicht;
+import adaptivesysteme.NeuronNetz.TransferExp;
+import adaptivesysteme.NeuronNetz.Transferfunktion;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -46,36 +45,32 @@ public class PLA {
 		try {
 			file = new PrintWriter("Errors_PLA.txt", "UTF-8");
 		} catch (FileNotFoundException e) {
-			// TODO Automatisch generierter Erfassungsblock
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
-			// TODO Automatisch generierter Erfassungsblock
 			e.printStackTrace();
 		}
 		int fehler = 1;
 		int i = 0, j = 0;
 		for (j = 0; j < 100000 && fehler != 0; j++) {
-			if (j % 1000 == 0)
+			if (j % 10000 == 0)
 				f.increaseLambda();
 			fehler = 0;
 			for (i = 0; i < werte.length; i++) {
 				double[] y;
 				y = n.train(werte[i], result[i]);
 				// Anzahl Fehler berechnen
+
 				fehler = 0;
-				for (int k = 0; k < werte.length; k++) {
+				for (int k = 0; k < werte.length && fehler == 0; k++) {
 					y = n.fire(werte[k]);
-					for(int e =0; e< y.length; e++){
+					for (int e = 0; e < y.length; e++) {
 						if (f.toDiskret(y[e]) != result[k][e]) {
 							fehler++;
 							break;
 						}
 					}
 				}
-				if (fehler == 0)
-					break;
-				file.append(fehler + ",\n");
-				// Setzen neuer gewichte
+				file.append(fehler + ",\n"); // Setzen neuer gewichte
 			}
 		}
 		System.out.println("Fertig nach " + j);
