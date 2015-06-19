@@ -19,17 +19,18 @@ public class InputHandler {
         JSONParser parser = new JSONParser();
 
         try {
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("LernDaten/02/gehen.json"));
+            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("Ruhelage/e1.json"));
 
             Characteristic c = new Characteristic(jsonObject);
             for(String key: c.characteristics.keySet()) {
                 LinkedHashMap<String, Double[]> data = c.characteristics.get(key);
                 System.out.println("Sensor: " + key);
                 for(String datakey : data.keySet()) {
-                    System.out.println("Datakey: " + datakey + "ValueCount: " + data.get(datakey).length);
+                    System.out.printf(datakey);
                     Double[] values = data.get(datakey);
                     for(Double d: values) {
                         System.out.println("Value: " + d);
+                        break;
                     }
                 }
             }
