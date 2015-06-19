@@ -92,7 +92,7 @@ public class CSV {
      */
     public static void main(String[] args) {
         File file;
-        int delta = 20000;
+        int delta = 10000;
         if(args.length <= 0) {
             file = new File("LernDaten/02/gehen.csv");
         } else {
@@ -101,7 +101,7 @@ public class CSV {
         if(args.length == 2) {
             delta = Integer.parseInt(args[1]);
         }
-
+    
         CSV csv = new CSV(file);
         System.out.println("Initialisation finished\n\n");
         Map<String, Sensor> sensors = csv.sensors;
