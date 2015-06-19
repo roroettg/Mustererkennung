@@ -1,0 +1,14 @@
+2x2 Matrix
+1. Richtig positiv: Der Patient ist krank, und der Test hat dies richtig angezeigt.
+2. Falsch negativ: Der Patient ist krank, aber der Test hat ihn fälschlicherweise als gesund eingestuft.
+3. Falsch positiv: Der Patient ist gesund, aber der Test hat ihn fälschlicherweise als krank eingestuft.
+4. Richtig negativ: Der Patient ist gesund, und der Test hat dies richtig angezeigt.
+
+
+Unser Fall NxN-Matrix:
+
+Klasse(Gehen)
+1. Richtig positiv: Die Person geht, und der Test hat dies richtig angezeigt
+2. Falsch negativ: Die Person geht, und der Test hat ihn fälschlicherweise als sitzend (oder andere Bewegung) eingestuft
+3. Falsch positiv: Die Person sitzt(oder andere Bewegung), und der Test hat ihn fälschlicherweise als gehend eingestuft
+4. Richtig negativ: Die Person sitzt(oder andere Bewegung), und der Test hat dies richtig als nicht gehen eingestuft.
