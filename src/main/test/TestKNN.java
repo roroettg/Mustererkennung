@@ -1,6 +1,7 @@
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import mustererkennung.algorithmen.InputHelper;
 import mustererkennung.algorithmen.KNN;
@@ -17,13 +18,51 @@ public class TestKNN {
 	private void runTest(ArrayList<Merkmal> lern, ArrayList<Merkmal> test, int neighbour, Norm norm) {
 		KNN knn = new KNN(lern, neighbour, norm);
 		int fehler = 0;
+		HashMap<String, Double> klassen = new HashMap<String, Double>();
 		for (Merkmal m : test) {
-			if (!m.getBewegungsart().equals(knn.classify(m))) {
+			Double d = klassen.get(m.getBewegungsart());
+			if (d == null || d == 0) {
+				d = 1.0;
+			} else {
+				d++;
+			}
+			klassen.put(m.getBewegungsart(), d);
+		}
+		int[] truePositiv = new int[klassen.size()];
+		int[] trueNegativ = new int[klassen.size()];
+		int[] falsePositiv = new int[klassen.size()];
+		int[] falseNegativ = new int[klassen.size()];
+		for (Merkmal m : test) {
+			String result;
+			result = knn.classify(m);
+			if (!m.getBewegungsart().equals(result)) {
 				fehler++;
+			}
+			int index = (new ArrayList(klassen.keySet()).indexOf(m.getBewegungsart()));
+			if(m.getBewegungsart() == result){
+				truePositiv[index]++;
+				for(int i=0; i< klassen.size(); i++){
+					if(i!=index){
+						trueNegativ[i]++;
+					}
+				}
+			}else if(m.getBewegungsart() != result){
+				falseNegativ[index]++;
+				int e = (new ArrayList(klassen.keySet()).indexOf(result));
+				falsePositiv[e]++;
 			}
 		}
 		System.out.println("fehlerrate:" + fehler + " von " + test.size());
 		assertTrue(fehler <= test.size() * 0.25);
+		ArrayList<String> k = new ArrayList(klassen.keySet());
+		for(int i=0; i<klassen.size(); i++){
+			System.out.println("\n\n" + k.get(i));
+			System.out.println("TruePositive:  " + truePositiv[i]);
+			System.out.println("FalsePositive: " + falsePositiv[i]);
+			System.out.println("TrueNegative:  " + trueNegativ[i]);
+			System.out.println("FalseNegative: " + falseNegativ[i]);
+		}
+		
 	}
 
 	@Test

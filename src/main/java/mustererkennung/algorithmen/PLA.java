@@ -70,6 +70,7 @@ public class PLA {
 						}
 					}
 				}
+				n.print_W();
 				file.append(fehler + ",\n"); // Setzen neuer gewichte
 			}
 		}

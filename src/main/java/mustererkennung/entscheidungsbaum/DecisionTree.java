@@ -10,10 +10,10 @@ import mustererkennung.algorithmen.Merkmal;
 /**
  * The Class TreeNode.
  */
-public class TreeNode {
+public class DecisionTree {
 
 	/** The childs. */
-	private TreeNode[] childs;
+	private DecisionTree[] childs;
 
 	/** The klasse. */
 	private String klasse = "";
@@ -48,11 +48,11 @@ public class TreeNode {
 	 * @param rang
 	 *            the rang
 	 */
-	public TreeNode(String t, int rang, MerkmalFinder finder) {
+	public DecisionTree(String t, int rang, MerkmalFinder finder) {
 		this.findmerkmal = finder;
 		this.tag = t;
 		this.rang = rang;
-		this.childs = new TreeNode[2];
+		this.childs = new DecisionTree[2];
 	}
 
 	/**
@@ -99,9 +99,9 @@ public class TreeNode {
 		} else {
 			this.split = this.splitAttribut(ms);
 			ArrayList<Merkmal>[] x12 = this.splitArray(ms, this.split, this.attributIndex);
-			this.childs[0] = new TreeNode(this.tag + "1", this.rang + 1, this.findmerkmal);
+			this.childs[0] = new DecisionTree(this.tag + "1", this.rang + 1, this.findmerkmal);
 			this.childs[0].generateTree(x12[0]);
-			this.childs[1] = new TreeNode(this.tag + "2", this.rang + 1, this.findmerkmal);
+			this.childs[1] = new DecisionTree(this.tag + "2", this.rang + 1, this.findmerkmal);
 			this.childs[1].generateTree(x12[1]);
 		}
 		return 0;
@@ -240,10 +240,13 @@ public class TreeNode {
 	 * Prints the tree.
 	 */
 	public void printTree() {
+		String t = "";
+		for(int i=0; i<this.rang; i++)
+			t= "\t" + t;
 		if (leaf) {
-			System.out.println(tag + " -> " + this.klasse);
+			System.out.println(t+ tag + " -> " + this.klasse);
 		} else {
-			System.out.println(this.tag + " " + findmerkmal.getSplitAttributName()[attributIndex] + ":( xi <= " + this.split + ")");
+			System.out.println(t+ this.tag + " " + findmerkmal.getSplitAttributName()[attributIndex] + ":( xi <= " + this.split + ")");
 			childs[0].printTree();
 			childs[1].printTree();
 		}

@@ -24,9 +24,9 @@ public class TestPla {
 
 	public double[] getMerkmalA(Merkmal m) {
 		double[] merk = new double[3];
-		merk[0] = m.getAverageAccX()[0];
+		merk[2] = m.getAverageAccX()[0];
 		merk[1] = m.getRangeAccX()[0];
-		merk[2] = m.getMaxAccX()[1];
+		merk[0] = m.getMaxAccX()[1];
 		return merk;
 	}
 
@@ -38,6 +38,10 @@ public class TestPla {
 		double[][] werte = new double[merkmale.size()][1];
 		double[][] result = new double[merkmale.size()][1];
 		double max = 0;
+		int truePositiv = 0;
+		int falsePositiv = 0;
+		int trueNegativ = 0;
+		int falseNegativ = 0;
 		int i = 0;
 		for (Merkmal m : merkmale) {
 			werte[i][0] = this.getMerkmal(m);
@@ -65,18 +69,34 @@ public class TestPla {
 		for (i = 0; i < mV.size(); i++) {
 			double loesung = (mV.get(i).getBewegungsart() == bewegung[0] ? 1 : 0);
 			if (loesung != p.getF().toDiskret(p.fire(verify[i])[0])) {
+				if (loesung == 1) {
+					falsePositiv++;
+				} else {
+					falseNegativ++;
+				}
 				System.out.println("Fehler: ");
 				System.out.println(mV.get(i).getBewegungsart() + this.getMerkmal(mV.get(i)));
 				System.out.println(loesung + " " + p.getF().toDiskret(p.fire(verify[i])[0]) + " Soll: " + mV.get(i).getBewegungsart());
 				fehler++;
+			} else {
+				if (loesung == 1) {
+					truePositiv++;
+				} else {
+					trueNegativ++;
+				}
 			}
 		}
+		System.out.println("TruePositive:  " + truePositiv);
+		System.out.println("FalsePositive: " + falsePositiv);
+		System.out.println("TrueNegative:  " + trueNegativ);
+		System.out.println("FalseNegative: " + falseNegativ);
 		System.out.println("Fehler: " + fehler + " von " + mV.size());
 		assertTrue(fehler <= mV.size() * 0.25);
 	}
 
 	@Test
 	public void test_2Klassen_2Neuronen() {
+
 		InputHelper helper = new InputHelper();
 		ArrayList<Merkmal> merkmale = helper.getLernDaten(bewegung[0]);
 		merkmale.addAll(helper.getLernDaten(bewegung[1]));
@@ -127,8 +147,8 @@ public class TestPla {
 	@Test
 	public void test_3Klassen_3Neuronen() {
 		InputHelper helper = new InputHelper();
-		int anzKlassen = 3;
-		int anzMerkmale = 3;
+		int anzKlassen = 2;
+		int anzMerkmale = 1;
 		ArrayList<Merkmal> merkmale = new ArrayList<Merkmal>();
 		ArrayList<Merkmal> mV = new ArrayList<Merkmal>();
 		for (int i = 0; i < anzKlassen; i++) {
@@ -146,7 +166,7 @@ public class TestPla {
 				werte[i][j] = this.getMerkmalA(m)[j];
 			}
 			for (int j = 0; j < anzKlassen; j++) {
-				result[i][j] = (merkmale.get(i).getBewegungsart() == bewegung[j] ? 1 : 0);
+				result[i][j] = (m.getBewegungsart() == bewegung[j] ? 1 : 0);
 			}
 			i++;
 			int k = 0;
@@ -154,6 +174,9 @@ public class TestPla {
 				if (Math.abs(max[k]) < Math.abs(d)) {
 					max[k] = d;
 				}
+				k++;
+				if(k >= anzMerkmale)
+					break;
 			}
 		}
 		for (int a = 0; a < anzMerkmale; a++) {
