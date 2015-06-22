@@ -22,11 +22,11 @@ public class InputHelper {
 			"maxAccXWithDelta", "maxAccYWithDelta", "maxAccZWithDelta", "minAccXWithDelta", "minAccYWithDelta", "minAccZWithDelta" };
 
 	/** The files_gehen. */
-	private final String[] files_gehen_lern = { "LernDaten/02/gehen.json", "LernDaten/07/gehen.json", "LernDaten/08/gehen.json", "LernDaten/13/gehen.json",
-			"LernDaten/15/gehen.json", "LernDaten/16/gehen.json", "LernDaten/20/gehen.json", };
+	public final String[] files_gehen_lern = { "LernDaten/02/gehen.json", "LernDaten/07/gehen.json", "LernDaten/08/gehen.json", "LernDaten/13/gehen.json",
+			"LernDaten/15/gehen.json", "LernDaten/16/gehen.json", "LernDaten/20/gehen.json"};
 
 	/** The files_sitzen. */
-	private final String[] files_sitzen_lern = { "LernDaten/02/sitzen.json", "LernDaten/07/sitzen.json", "LernDaten/08/sitzen.json",
+	public final String[] files_sitzen_lern = { "LernDaten/02/sitzen.json", "LernDaten/07/sitzen.json", "LernDaten/08/sitzen.json",
 			"LernDaten/13/sitzen.json", "LernDaten/15/sitzen.json", "LernDaten/16/sitzen.json", "LernDaten/20/sitzen.json" };
 
 	private final String[] files_joggen_lern = { "LernDaten/02/joggen.json", "LernDaten/07/joggen.json", "LernDaten/08/laufen.json",

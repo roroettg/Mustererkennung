@@ -1,4 +1,4 @@
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,30 +39,29 @@ public class TestKNN {
 				fehler++;
 			}
 			int index = (new ArrayList(klassen.keySet()).indexOf(m.getBewegungsart()));
-			if(m.getBewegungsart() == result){
+			if (m.getBewegungsart() == result) {
 				truePositiv[index]++;
-				for(int i=0; i< klassen.size(); i++){
-					if(i!=index){
+				for (int i = 0; i < klassen.size(); i++) {
+					if (i != index) {
 						trueNegativ[i]++;
 					}
 				}
-			}else if(m.getBewegungsart() != result){
+			} else if (m.getBewegungsart() != result) {
 				falseNegativ[index]++;
 				int e = (new ArrayList(klassen.keySet()).indexOf(result));
 				falsePositiv[e]++;
 			}
 		}
 		System.out.println("fehlerrate:" + fehler + " von " + test.size());
-		assertTrue(fehler <= test.size() * 0.25);
 		ArrayList<String> k = new ArrayList(klassen.keySet());
-		for(int i=0; i<klassen.size(); i++){
+		for (int i = 0; i < klassen.size(); i++) {
 			System.out.println("\n\n" + k.get(i));
 			System.out.println("TruePositive:  " + truePositiv[i]);
 			System.out.println("FalsePositive: " + falsePositiv[i]);
 			System.out.println("TrueNegative:  " + trueNegativ[i]);
 			System.out.println("FalseNegative: " + falseNegativ[i]);
 		}
-		
+		assertTrue(fehler <= test.size() * 0.25);
 	}
 
 	@Test
@@ -118,10 +117,10 @@ public class TestKNN {
 		InputHelper input = new InputHelper();
 		ArrayList<Merkmal> lern = input.getLernDaten("gehen");
 		lern.addAll(input.getLernDaten("sitzen"));
-		lern.addAll(input.getLernDaten("joggen"));
+		lern.addAll(input.getLernDaten("treppe"));
 		ArrayList<Merkmal> test = input.getVerificationDaten("gehen");
 		test.addAll(input.getVerificationDaten("sitzen"));
-		test.addAll(input.getVerificationDaten("joggen"));
+		test.addAll(input.getVerificationDaten("treppe"));
 		System.out.println("\nTest testKNN3Manhattan");
 		runTest(lern, test, 7, new NormEuklid());
 	}
@@ -155,8 +154,7 @@ public class TestKNN {
 		System.out.println("\nTest testKNN3Manhattan");
 		runTest(lern, test, 3, new NormManhattan());
 	}
-	
-	
+
 	@Test
 	public void testKNN5Manhattan3() {
 		InputHelper input = new InputHelper();
@@ -172,5 +170,24 @@ public class TestKNN {
 		test.addAll(input.getVerificationDaten("drehen"));
 		System.out.println("\nTest testKNN3Manhattan");
 		runTest(lern, test, 3, new NormManhattan());
+	}
+
+	@Test
+	public void test_Variationen_von_K() throws Exception {
+		InputHelper input = new InputHelper();
+		ArrayList<Merkmal> lern = input.getLernDaten("gehen");
+		lern.addAll(input.getLernDaten("sitzen"));
+		lern.addAll(input.getLernDaten("joggen"));
+		lern.addAll(input.getLernDaten("drehen"));
+		lern.addAll(input.getLernDaten("treppe"));
+		ArrayList<Merkmal> test = input.getVerificationDaten("gehen");
+		test.addAll(input.getVerificationDaten("sitzen"));
+		test.addAll(input.getVerificationDaten("joggen"));
+		test.addAll(input.getVerificationDaten("drehen"));
+		test.addAll(input.getVerificationDaten("treppe"));
+		for (int i = 3; i <= 111; i = i + 2) {
+			System.out.println("\nTest testK= " + i);
+			runTest(lern, test, i, new NormEuklid());
+		}
 	}
 }

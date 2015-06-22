@@ -123,7 +123,7 @@ public class TestEntscheidnungsbaum {
 		DecisionTree n = new DecisionTree("Root", 0, new MerkmalFinderImpl());
 		InputHelper input = new InputHelper();
 		ArrayList<Merkmal> ms = new ArrayList<Merkmal>();
-		ms.addAll(input.getLernDaten("treppe"));
+		ms.addAll(input.getLernDaten("sitzen"));
 		ms.addAll(input.getLernDaten("gehen"));
 		n.generateTree(ms);
 		n.printTree();
@@ -133,7 +133,7 @@ public class TestEntscheidnungsbaum {
 			assertTrue(n.classify(m) == m.getBewegungsart());
 		}
 		ArrayList<Merkmal> msVerify = input.getVerificationDaten("gehen");
-		msVerify.addAll(input.getVerificationDaten("treppe"));
+		msVerify.addAll(input.getVerificationDaten("sitzen"));
 		int fehler = verifyTree(n, msVerify);
 		System.out.println(fehler + " von " + msVerify.size());
 	}
@@ -167,10 +167,9 @@ public class TestEntscheidnungsbaum {
 		DecisionTree n = new DecisionTree("Root", 0, new Mf3attrib());
 		InputHelper input = new InputHelper();
 		ArrayList<Merkmal> ms = new ArrayList<Merkmal>();
-		ms.addAll(input.getLernDaten("treppe"));
+		ms.addAll(input.getLernDaten("joggen"));
 		ms.addAll(input.getLernDaten("gehen"));
 		ms.addAll(input.getLernDaten("sitzen"));
-		ms.addAll(input.getLernDaten("drehen"));
 		n.generateTree(ms);
 		n.printTree();
 		// Verify Trainingsmaterial
@@ -179,9 +178,8 @@ public class TestEntscheidnungsbaum {
 			assertTrue(n.classify(m) == m.getBewegungsart());
 		}
 		ArrayList<Merkmal> msVerify = input.getVerificationDaten("gehen");
-		msVerify.addAll(input.getVerificationDaten("treppe"));
+		msVerify.addAll(input.getVerificationDaten("joggen"));
 		msVerify.addAll(input.getVerificationDaten("sitzen"));
-		msVerify.addAll(input.getVerificationDaten("drehen"));
 		int fehler = verifyTree(n, msVerify);
 		System.out.println(fehler + " von " + msVerify.size());
 	}
@@ -209,7 +207,6 @@ public class TestEntscheidnungsbaum {
 		msVerify.addAll(input.getVerificationDaten("drehen"));
 		msVerify.addAll(input.getVerificationDaten("joggen"));
 		int fehler = verifyTree(n, msVerify);
-		System.out.println("Fehlerrate: " +fehler + " von " + msVerify.size());
 		
 	}
 
@@ -258,6 +255,7 @@ public class TestEntscheidnungsbaum {
 			System.out.println("TrueNegative:  " + trueNegativ[i]);
 			System.out.println("FalseNegative: " + falseNegativ[i]);
 		}
+		System.out.println("Fehlerrate: " +fehler + " von " + msVerify.size());
 		assertTrue(fehler <= (msVerify.size() * 0.25));
 		return fehler;
 	}

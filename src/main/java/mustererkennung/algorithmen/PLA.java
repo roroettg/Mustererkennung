@@ -18,7 +18,7 @@ public class PLA {
 	private NeuronenSchicht n;
 
 	/** The f. */
-	private Transferfunktion f;
+	private TransferExp f;
 
 	private PrintWriter file;
 
@@ -30,6 +30,8 @@ public class PLA {
 	 */
 	public PLA(int dim, int input) {
 		this.f = new TransferExp();
+		this.f.setLdelta(1.5);
+		this.f.setUpdateRate(0.005);
 		this.n = new NeuronenSchicht(input, dim, f);
 	}
 
@@ -51,28 +53,26 @@ public class PLA {
 		}
 		int fehler = 1;
 		int i = 0, j = 0;
-		for (j = 0; j < 100000 && fehler != 0; j++) {
-			if (j % 10000 == 0)
-				f.increaseLambda();
+		for (j = 0; j < 10000 && fehler != 0; j++) {
+			f.increaseLambda();
 			fehler = 0;
+			double[] y;
 			for (i = 0; i < werte.length; i++) {
-				double[] y;
-				y = n.train(werte[i], result[i]);
+				n.train(werte[i], result[i]);
 				// Anzahl Fehler berechnen
-
-				fehler = 0;
-				for (int k = 0; k < werte.length && fehler == 0; k++) {
-					y = n.fire(werte[k]);
-					for (int e = 0; e < y.length; e++) {
-						if (f.toDiskret(y[e]) != result[k][e]) {
-							fehler++;
-							break;
-						}
+			}
+			fehler = 0;
+			for (int k = 0; k < werte.length && fehler == 0; k++) {
+				y = n.fire(werte[k]);
+				for (int e = 0; e < y.length; e++) {
+					if (f.toDiskret(y[e]) != result[k][e]) {
+						fehler++;
+						break;
 					}
 				}
-				n.print_W();
-				file.append(fehler + ",\n"); // Setzen neuer gewichte
 			}
+			// n.print_W();
+			file.append(fehler + ",\n"); // Setzen neuer gewichte
 		}
 		System.out.println("Fertig nach " + j);
 		System.out.println("TestAnd Gewichte:");

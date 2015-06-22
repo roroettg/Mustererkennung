@@ -1,28 +1,50 @@
 package adaptivesysteme.NeuronNetz;
 
+
 public class TransferExp implements Transferfunktion {
 
 	private double lambda = 1;
-	private double ldelta = 0.1;
-	private double eps = 0.2;
+	private double ldelta = 1.5;
+	private double eps = 0.1;
+	private double updateRate = 0.01;
 
-	
-	public TransferExp(){
+	public void setLambda(double lambda) {
+		this.lambda = lambda;
+	}
+
+	public void setLdelta(double ldelta) {
+		this.ldelta = ldelta;
+	}
+
+	public void setEps(double eps) {
+		this.eps = eps;
+	}
+
+	public void setUpdateRate(double updateRate) {
+		this.updateRate = updateRate;
+	}
+
+	public TransferExp() {
 		this.lambda = 1;
 		this.ldelta = 0.1;
-		this.eps = 0.2;
+		this.eps = 0.4;
 
 	}
-	
-	public TransferExp(double l, double ld, double e){
+
+	public TransferExp(double l, double ld, double e) {
 		this.lambda = l;
 		this.ldelta = ld;
 		this.eps = e;
 	}
-	
+
+	public double getLambda() {
+		return lambda;
+	}
+
 	@Override
 	public double f(double x) {
-		return 1 / (1 + Math.exp(lambda * -x));
+		x = 1 / (1 + Math.exp(lambda * -x));
+		return x;
 	}
 
 	@Override
@@ -42,7 +64,6 @@ public class TransferExp implements Transferfunktion {
 
 	@Override
 	public void increaseLambda() {
-		this.lambda += ldelta;
-
+		this.lambda += (ldelta * updateRate);
 	}
 }

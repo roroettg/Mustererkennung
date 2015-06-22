@@ -1,0 +1,48 @@
+digraph G {
+
+Root -> Root1;
+Root -> Root2;
+Root [label="AverageAccX:( xi <= -11.034694787375422)"];
+Root1 -> Root11;
+Root1 -> Root12;
+Root1 [label="AverageAccY:( xi <= -1.8218292576333317)"];
+Root11 -> Root111;
+Root11 -> Root112;
+Root11 [label="AverageAccX:( xi <= -9.663490125)"];
+Root111 -> Root1111;
+Root111 -> Root1112;
+Root111 [label="AverageAccY:( xi <= -1.2150843052208837)"];
+Root1111 [label="sitzen"];
+Root1112 -> Root11121;
+Root1112 -> Root11122;
+Root1112 [label="AverageAccY:( xi <= -1.7788464896666654)"];
+Root11121 [label="treppe"];
+Root11122 [label="sitzen"];
+Root112 [label="treppe"];
+Root12 [label="treppe"];
+Root2 -> Root21;
+Root2 -> Root22;
+Root2 [label="AverageAccX:( xi <= -11.741289924040066)"];
+Root21 -> Root211;
+Root21 -> Root212;
+Root21 [label="AverageAccY:( xi <= -0.6451742245899994)"];
+Root211 [label="gehen"];
+Root212 -> Root2121;
+Root212 -> Root2122;
+Root212 [label="AverageAccX:( xi <= -11.098290355000003)"];
+Root2121 -> Root21211;
+Root2121 -> Root21212;
+Root2121 [label="AverageAccX:( xi <= -11.089014344000002)"];
+Root21211 [label="treppe"];
+Root21212 [label="gehen"];
+Root2122 [label="treppe"];
+Root22 -> Root221;
+Root22 -> Root222;
+Root22 [label="AverageAccY:( xi <= -0.5570245429166673)"];
+Root221 -> Root2211;
+Root221 -> Root2212;
+Root221 [label="AverageAccY:( xi <= -0.5368653067500003)"];
+Root2211 [label="gehen"];
+Root2212 [label="treppe"];
+Root222 [label="gehen"];
+}

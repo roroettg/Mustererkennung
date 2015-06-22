@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public class TestPla {
 
-	private String[] bewegung = { "gehen", "sitzen", "treppe", "joggen", "drehen" };
+	private String[] bewegung = { "gehen", "sitzen", "joggen", "treppe", "drehen" };
 
 	public double getMerkmal(Merkmal m) {
 		return m.getRangeAccX()[0]; // ok,ok,23
@@ -25,8 +25,8 @@ public class TestPla {
 	public double[] getMerkmalA(Merkmal m) {
 		double[] merk = new double[3];
 		merk[2] = m.getAverageAccX()[0];
-		merk[1] = m.getRangeAccX()[0];
-		merk[0] = m.getMaxAccX()[1];
+		merk[0] = m.getRangeAccX()[0];
+		merk[1] = m.getMaxAccX()[1];
 		return merk;
 	}
 
@@ -48,11 +48,11 @@ public class TestPla {
 			result[i][0] = (merkmale.get(i).getBewegungsart() == bewegung[0] ? 1 : 0);
 			i++;
 			if (Math.abs(max) < Math.abs(this.getMerkmal(m))) {
-				max = this.getMerkmal(m);
+				max = Math.abs(this.getMerkmal(m));
 			}
 		}
 		for (i = 0; i < werte.length && max != 0; i++) {
-			werte[i][0] = werte[i][0] / max;
+			werte[i][0] = ((werte[i][0] / max) + 1) / 2;
 		}
 		PLA p = new PLA(1, 1);
 		p.train(werte, result);
@@ -63,7 +63,7 @@ public class TestPla {
 		double[][] verify = new double[mV.size()][1];
 		i = 0;
 		for (Merkmal m : mV) {
-			verify[i++][0] = this.getMerkmal(m) / max;
+			verify[i++][0] = ((this.getMerkmal(m) / max) + 1) / 2;
 		}
 		int fehler = 0;
 		for (i = 0; i < mV.size(); i++) {
@@ -91,6 +91,7 @@ public class TestPla {
 		System.out.println("TrueNegative:  " + trueNegativ);
 		System.out.println("FalseNegative: " + falseNegativ);
 		System.out.println("Fehler: " + fehler + " von " + mV.size());
+		System.out.println("Max: " + max);
 		assertTrue(fehler <= mV.size() * 0.25);
 	}
 
@@ -147,8 +148,8 @@ public class TestPla {
 	@Test
 	public void test_3Klassen_3Neuronen() {
 		InputHelper helper = new InputHelper();
-		int anzKlassen = 2;
-		int anzMerkmale = 1;
+		int anzKlassen = 3;
+		int anzMerkmale = 3;
 		ArrayList<Merkmal> merkmale = new ArrayList<Merkmal>();
 		ArrayList<Merkmal> mV = new ArrayList<Merkmal>();
 		for (int i = 0; i < anzKlassen; i++) {
@@ -158,6 +159,10 @@ public class TestPla {
 		double[][] werte = new double[merkmale.size()][anzMerkmale];
 		double[][] result = new double[merkmale.size()][anzKlassen];
 		double[][] verify;
+		int[] truePositiv = new int[anzKlassen];
+		int[] trueNegativ = new int[anzKlassen];
+		int[] falsePositiv = new int[anzKlassen];
+		int[] falseNegativ = new int[anzKlassen];
 		verify = new double[mV.size()][anzMerkmale];
 		double[] max = new double[anzMerkmale];
 		int i = 0;
@@ -175,13 +180,13 @@ public class TestPla {
 					max[k] = d;
 				}
 				k++;
-				if(k >= anzMerkmale)
+				if (k >= anzMerkmale)
 					break;
 			}
 		}
 		for (int a = 0; a < anzMerkmale; a++) {
 			for (i = 0; i < werte.length && max[a] != 0; i++) {
-				werte[i][a] = werte[i][a] / max[a];
+				werte[i][a] = ((werte[i][a] / max[a])+1)/2;
 			}
 		}
 		PLA p = new PLA(anzKlassen, anzMerkmale);
@@ -190,7 +195,7 @@ public class TestPla {
 		i = 0;
 		for (Merkmal m1 : mV) {
 			for (int a = 0; a < anzMerkmale; a++) {
-				verify[i][a] = this.getMerkmalA(m1)[a] / max[a];
+				verify[i][a] = ((this.getMerkmalA(m1)[a] / max[a])+1)/2;
 			}
 			i++;
 		}
@@ -208,9 +213,26 @@ public class TestPla {
 						b.append(loesung[a] + " =" + p.getF().toDiskret(p.fire(verify[i])[a]) + "; ");
 					}
 					System.out.println(b.toString());
-					break;
+				}
+				if (loesung[j] == p.getF().toDiskret(p.fire(verify[i])[j])) {
+					if(loesung[j]==1)
+						truePositiv[j]++;
+					else if(loesung[j]==0)
+						trueNegativ[j]++;
+				}else{
+					if(p.getF().toDiskret(p.fire(verify[i])[j])==0)
+						falseNegativ[j]++;
+					else if(p.getF().toDiskret(p.fire(verify[i])[j])==1)
+						falsePositiv[j]++;
 				}
 			}
+		}
+		for (i = 0; i < anzKlassen; i++) {
+			System.out.println("\n\n" + this.bewegung[i]);
+			System.out.println("TruePositive:  " + truePositiv[i]);
+			System.out.println("FalsePositive: " + falsePositiv[i]);
+			System.out.println("TrueNegative:  " + trueNegativ[i]);
+			System.out.println("FalseNegative: " + falseNegativ[i]);
 		}
 		System.out.println("Fehler: " + fehler + " von " + mV.size());
 		assertTrue(fehler <= mV.size() * 0.25);

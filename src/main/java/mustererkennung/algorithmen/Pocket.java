@@ -14,7 +14,7 @@ public class Pocket {
 	private NeuronenSchicht n;
 
 	/** The f. */
-	private Transferfunktion f;
+	private TransferExp f;
 
 	private double[][] bestWeights;
 
@@ -32,6 +32,8 @@ public class Pocket {
 	public Pocket(int dim, int inputs) {
 		this.dim = dim;
 		this.f = new TransferExp();
+		this.f.setLdelta(1.5);
+		this.f.setUpdateRate(0.005);
 		this.n = new NeuronenSchicht(inputs, dim, f, "Pocket");
 	}
 
@@ -75,9 +77,8 @@ public class Pocket {
 		copyWeights(n.getW());
 		int fehler = -1;
 		int i = 0, j = 0;
-		for (j = 0; j < 100000 && fehler != 0; j++) {
-			if (j % 1000 == 0)
-				f.increaseLambda();
+		for (j = 0; j < 10000 && fehler != 0; j++) {
+			f.increaseLambda();
 			for (i = 0; i < werte.length; i++) {
 				double[] y;
 				y = n.train(werte[i], result[i]);
