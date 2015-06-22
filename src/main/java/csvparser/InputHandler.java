@@ -16,12 +16,13 @@ import java.util.LinkedHashMap;
 public class InputHandler {
 
     public static void main(String[] args) {
+        int sensorCount = 6;
         JSONParser parser = new JSONParser();
 
         try {
             JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("Ruhelage/e1.json"));
 
-            Characteristic c = new Characteristic(jsonObject);
+            Characteristic c = new Characteristic(jsonObject, sensorCount);
             for(String key: c.characteristics.keySet()) {
                 LinkedHashMap<String, Double[]> data = c.characteristics.get(key);
                 System.out.println("Sensor: " + key);

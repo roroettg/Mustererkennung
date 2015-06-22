@@ -235,7 +235,50 @@ public class CSV {
             values.add(minAccY);
             values.add(minAccZ);
 
-            System.out.println("MaxValue calculated for Sensor" + sensor.getId());
+            System.out.println("MinValue calculated for Sensor" + sensor.getId());
+
+
+            JSONObject energyAccX = new JSONObject();
+            JSONArray energyDX = new JSONArray();
+            energyDX.addAll(StatisticHelper.energyWithDelta(sensor.getAccelX(), delta));
+            energyAccX.put("a", energyDX);
+
+            JSONObject energyAccY = new JSONObject();
+            JSONArray energyAccDY = new JSONArray();
+            energyAccDY.addAll(StatisticHelper.energyWithDelta(sensor.getAccelY(), delta));
+            energyAccY.put("b", energyAccDY);
+
+            JSONObject energyAccZ = new JSONObject();
+            JSONArray energyAccDZ = new JSONArray();
+            energyAccDZ.addAll(StatisticHelper.energyWithDelta(sensor.getAccelZ(), delta));
+            energyAccZ.put("c", energyAccDZ);
+
+            values.add(energyAccX);
+            values.add(energyAccY);
+            values.add(energyAccZ);
+
+            System.out.println("Energy calculated for Sensor" + sensor.getId());
+
+            JSONObject energyAbsAccX = new JSONObject();
+            JSONArray energyAbsDAccX = new JSONArray();
+            energyAbsDAccX.addAll(StatisticHelper.energyWithDeltaAbsolute(sensor.getAccelX(), delta));
+            energyAbsAccX.put("energyAbsAccXWithDelta", energyAbsDAccX);
+
+            JSONObject energyAbsAccY = new JSONObject();
+            JSONArray energyAbsAccDY = new JSONArray();
+            energyAbsAccDY.addAll(StatisticHelper.energyWithDeltaAbsolute(sensor.getAccelY(), delta));
+            energyAbsAccY.put("energyAbsAccYWithDelta", energyAbsAccDY);
+
+            JSONObject energyAbsAccZ = new JSONObject();
+            JSONArray energyAbsAccDZ = new JSONArray();
+            energyAbsAccDZ.addAll(StatisticHelper.energyWithDeltaAbsolute(sensor.getAccelZ(), delta));
+            energyAbsAccZ.put("energyAbsAccZWithDelta", energyAbsAccDZ);
+
+            values.add(energyAbsAccX);
+            values.add(energyAbsAccY);
+            values.add(energyAbsAccZ);
+
+            System.out.println("energyAbs calculated for Sensor" + sensor.getId());
 
             JSONObject sensorValue = new JSONObject();
             sensorValue.put(sensor.getId(), values);
@@ -245,12 +288,14 @@ public class CSV {
 
         }
 
-//
+
         FileWriter fw = null;
         String newPath = file.toString().replace(".csv", ".json");
         try {
             fw = new FileWriter(newPath);
-            fw.write(jsonObject.toString());
+            fw.write(jsonObject.toJSONString());
+
+//            jsonObject.writeJSONString(fw);
             System.out.println("Successfully Copied JSON Object to File...");
             System.out.println("\nJSON Object: " + jsonObject.toJSONString());
 
@@ -270,4 +315,6 @@ public class CSV {
 
 
     }
+
+
 }

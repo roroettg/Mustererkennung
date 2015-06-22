@@ -10,13 +10,14 @@ import java.util.*;
  */
 public class Characteristic {
 
-    public static final int MAX_SENORS = 3;
+    private final int sensorCount;
     // Map<id, Map<valueTag, value>
     public Map<String, LinkedHashMap<String, Double[]>> characteristics = new LinkedHashMap<String, LinkedHashMap<String, Double[]>>();
 
-    public Characteristic(JSONObject jsonObject) {
-        String[] ids = new String[MAX_SENORS];
-        for(int i = 0; i < MAX_SENORS; i++) {
+    public Characteristic(JSONObject jsonObject, int sensorCount) {
+        this.sensorCount = sensorCount;
+        String[] ids = new String[sensorCount];
+        for(int i = 0; i < sensorCount; i++) {
             JSONObject dataObj = ((JSONObject)jsonObject.get("sensor" + i));
             String id = (String) ((JSONObject)jsonObject.get("sensor" + i)).keySet().toArray()[0];
 

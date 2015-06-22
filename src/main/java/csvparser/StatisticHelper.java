@@ -1,5 +1,6 @@
 package csvparser;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 /**
@@ -232,5 +233,77 @@ public class StatisticHelper {
             }
         }
         return processedData;
+    }
+
+    public static List<Double> energyWithDeltaAbsolute(Map<Long, Double> data, int delta) {
+        List<Double> processedData = new LinkedList<>();
+        List<Double> subData = new LinkedList<Double>();
+        Long[] timestamps = new Long[data.keySet().size()];
+        data.keySet().toArray(timestamps);
+        Double[] values = new Double[data.values().size()];
+        data.values().toArray(values);
+
+
+        for(int i = 0; i < timestamps.length-1; i++) {
+            Long start = timestamps[i];
+            Long nextTimestamp = timestamps[i];
+            for(int j = 0; nextTimestamp - delta <= start && j < timestamps.length-1; j++, nextTimestamp = timestamps[j]) {
+                subData.add(values[j]);
+            }
+            Double factor = delta/(1.0 *subData.size());
+            processedData.add(energyAbsolute(subData,factor));
+            subData.clear();
+            Long nextStep = start;
+            while (nextStep - start < 1000 && i < timestamps.length-1) {
+                i++;
+                nextStep = timestamps[i];
+            }
+        }
+        return processedData;
+
+    }
+
+    public static Double energyAbsolute(Collection<Double> data, Double factor) {
+        Double value = 0.0;
+        for(Double d : data) {
+            value +=  Math.abs(d) * factor;
+        }
+        return value;
+    }
+
+    public static List<Double> energyWithDelta(Map<Long, Double> data, int delta) {
+        List<Double> processedData = new LinkedList<>();
+        List<Double> subData = new LinkedList<Double>();
+        Long[] timestamps = new Long[data.keySet().size()];
+        data.keySet().toArray(timestamps);
+        Double[] values = new Double[data.values().size()];
+        data.values().toArray(values);
+
+
+        for(int i = 0; i < timestamps.length-1; i++) {
+            Long start = timestamps[i];
+            Long nextTimestamp = timestamps[i];
+            for(int j = 0; nextTimestamp - delta <= start && j < timestamps.length-1; j++, nextTimestamp = timestamps[j]) {
+                subData.add(values[j]);
+            }
+            Double factor = delta/(1.0 *subData.size());
+            processedData.add(energy(subData, factor));
+            subData.clear();
+            Long nextStep = start;
+            while (nextStep - start < 1000 && i < timestamps.length-1) {
+                i++;
+                nextStep = timestamps[i];
+            }
+        }
+        return processedData;
+
+    }
+
+    public static Double energy(Collection<Double> data, Double factor) {
+        Double value = 0.0;
+        for(Double d : data) {
+            value +=  d * factor;
+        }
+        return value;
     }
 }
