@@ -19,7 +19,8 @@ public class InputHelper {
 	/** The value tags. */
 	String[] valueTags = { "avgAccXWithDelta", "avgAccYWithDelta", "avgAccZWithDelta", "stdAccXWithDelta", "stdAccYWithDelta", "stdAccZWithDelta",
 			"medianAccXWithDelta", "medianAccYWithDelta", "medianAccZWithDelta", "rangeAccXWithDelta", "rangeAccYWithDelta", "rangeAccZWithDelta",
-			"maxAccXWithDelta", "maxAccYWithDelta", "maxAccZWithDelta", "minAccXWithDelta", "minAccYWithDelta", "minAccZWithDelta" };
+			"maxAccXWithDelta", "maxAccYWithDelta", "maxAccZWithDelta", "minAccXWithDelta", "minAccYWithDelta", "minAccZWithDelta",
+			"a", "b", "c", "energyAbsAccXWithDelta", "energyAbsAccYWithDelta", "energyAbsAccZWithDelta"};
 
 	/** The files_gehen. */
 	public final String[] files_gehen_lern = { "LernDaten/02/gehen.json", "LernDaten/07/gehen.json", "LernDaten/08/gehen.json", "LernDaten/13/gehen.json",

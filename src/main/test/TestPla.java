@@ -14,7 +14,7 @@ public class TestPla {
 	private String[] bewegung = { "gehen", "sitzen", "joggen", "treppe", "drehen" };
 
 	public double getMerkmal(Merkmal m) {
-		return m.getRangeAccX()[0]; // ok,ok,23
+		return m.getEnergyAbsAccXWithDelta()[0]; // ok,ok,23
 		// return m.getRangeAccZ()[0]; //ok, ,
 		// return m.getMaxAccX()[1]; // ,ok,
 		// return m.getMaxAccY()[1]; // 5,ok, 5
@@ -23,7 +23,7 @@ public class TestPla {
 	}
 
 	public double[] getMerkmalA(Merkmal m) {
-		double[] merk = new double[3];
+		double[] merk = new double[3];;
 		merk[2] = m.getAverageAccX()[0];
 		merk[0] = m.getRangeAccX()[0];
 		merk[1] = m.getMaxAccX()[1];

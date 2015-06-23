@@ -50,6 +50,11 @@ public class TestKNN {
 				falseNegativ[index]++;
 				int e = (new ArrayList(klassen.keySet()).indexOf(result));
 				falsePositiv[e]++;
+				for (int i = 0; i < klassen.size(); i++) {
+					if (i != e && i != index) {
+						trueNegativ[i]++;
+					}
+				}
 			}
 		}
 		System.out.println("fehlerrate:" + fehler + " von " + test.size());

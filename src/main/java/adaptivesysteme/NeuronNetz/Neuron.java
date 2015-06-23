@@ -58,7 +58,7 @@ public class Neuron {
 		w = new double[input + 1];
 		w[0] = 1;
 		for (int i = 1; i <= input; i++)
-			w[i] = Math.random();
+			w[i] = 0.5;//Math.random();
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class Neuron {
 		w = new double[input + 1];
 		w[0] = 1;
 		for (int i = 1; i <= input; i++)
-			w[i] = Math.random();
+			w[i] = 0.5;//Math.random();
 		tag = name;
 	}
 

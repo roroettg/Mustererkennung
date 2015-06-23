@@ -39,7 +39,7 @@ public class Pocket {
 
 	private void copyWeights(double[][] newW) {
 		bestWeights = new double[dim][];
-		System.out.println("Copy Weights");
+		System.out.println("Copy Weights " + bestError);
 		for (int i = 0; i < dim; i++) {
 			bestWeights[i] = new double[newW[i].length];
 			for (int e = 0; e < newW[i].length; e++) {

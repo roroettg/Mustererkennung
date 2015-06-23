@@ -1,9 +1,9 @@
 package mustererkennung.algorithmen;
 
 public class Merkmal {
-	private String SensorID="";
+	private String SensorID = "";
 	private String Bewegungsart = "";
-	
+
 	private double[] averageAccX;
 	private double[] averageAccY;
 	private double[] averageAccZ;
@@ -22,20 +22,39 @@ public class Merkmal {
 	private double[] minAccX;
 	private double[] minAccY;
 	private double[] minAccZ;
+	private double[] a;
+	private double[] b;
+	private double[] c;
+	
+	private double[] energyAbsAccXWithDelta;
+	private double[] energyAbsAccYWithDelta;
+	private double[] energyAbsAccZWithDelta;
 
-	public Merkmal(String id, String art){
+	public Merkmal(String id, String art) {
 		this.SensorID = id;
 		this.Bewegungsart = art;
 	}
-	
+
 	public String getSensorID() {
 		return SensorID;
+	}
+
+	public double[] getEnergyAbsAccXWithDelta() {
+		return energyAbsAccXWithDelta;
+	}
+
+	public double[] getEnergyAbsAccYWithDelta() {
+		return energyAbsAccYWithDelta;
+	}
+
+	public double[] getEnergyAbsAccZWithDelta() {
+		return energyAbsAccZWithDelta;
 	}
 
 	public String getBewegungsart() {
 		return Bewegungsart;
 	}
-	
+
 	public void setByTag(String tag, double[] value) {
 		if (tag == "avgAccXWithDelta") {
 			averageAccX = value;
@@ -73,21 +92,33 @@ public class Merkmal {
 			minAccY = value;
 		} else if (tag == "minAccZWithDelta") {
 			minAccZ = value;
-		} else {
+		} else if (tag == "energyAbsAccXWithDelta") {
+			energyAbsAccXWithDelta = value;
+		} else if (tag == "energyAbsAccYWithDelta") {
+			energyAbsAccYWithDelta = value;
+		} else if (tag == "energyAbsAccZWithDelta") {
+			energyAbsAccZWithDelta = value;
+		} else if (tag == "a") {
+			a = value;
+		} else if (tag == "b") {
+			b = value;
+		} else if (tag == "c") {
+			c = value;
+		}else {
 			System.out.println("Keinen Parameter gefunden");
 		}
 
 	}
-	
-	public double[] getVector(){
+
+	public double[] getVector() {
 		double[] vec = new double[5];
 		vec[0] = this.averageAccX[0];
 		vec[1] = this.averageAccY[2];
 		vec[2] = this.rangeAccY[1];
-		//vec[3] = this.rangeAccX[0];
+		// vec[3] = this.rangeAccX[0];
 		vec[4] = this.averageAccZ[0];
 		vec[3] = this.maxAccY[1]; // 7 und 3
-		//vec[3] = this.stdAccY[2]; // 5 und 3
+		// vec[3] = this.stdAccY[2]; // 5 und 3
 		return vec;
 	}
 
